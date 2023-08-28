@@ -28,7 +28,7 @@ export default {
       port: 3000,
     },
     watch: {
-      usePolling: true,
+      // usePolling: true,
       disableGlobbing: false,
     },
   },

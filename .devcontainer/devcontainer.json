@@ -9,8 +9,10 @@
 		"vscode": {
 			"extensions": [
 				"ms-python.python",
-				"syler.sass-indented",
-				"glenn2223.live-sass"
+				"ms-python.vscode-pylance",
+				"ms-azuretools.vscode-docker",
+				"ms-vscode-remote.remote-containers",
+				"matangover.mypy"
 			]
 		}
 	}
