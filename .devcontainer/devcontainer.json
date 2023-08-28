@@ -1,0 +1,17 @@
+{
+	"name": "Django dev container",
+	"dockerComposeFile": [
+		"docker-compose.yml"
+	],
+	"service": "django",
+	"workspaceFolder": "/app/",
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"ms-python.python",
+				"syler.sass-indented",
+				"glenn2223.live-sass"
+			]
+		}
+	}
+}

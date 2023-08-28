@@ -1,0 +1,13 @@
+{
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "devDependencies": {
+    "@unocss/preset-wind": "^0.55.1",
+    "unocss": "^0.55.1",
+    "vite": "^4.4.9",
+    "vite-plugin-full-reload": "^1.0.5"
+  }
+}

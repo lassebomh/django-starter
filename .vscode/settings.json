@@ -1,0 +1,15 @@
+{
+    "liveSassCompile.settings.formats": [
+        {
+            "format": "compressed",
+            "extensionName": ".css",
+            "savePath": "/static/build/css",
+            "savePathReplacementPairs": null
+        }
+    ],
+    "search.exclude": {
+        "static/build": true,
+        "**/migrations/": true,
+    },
+    "python.defaultInterpreterPath": "/usr/local/bin/python"
+}

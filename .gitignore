@@ -1,0 +1,13 @@
+**/__pycache__/
+*/__pycache__/
+__pycache__/
+*.py[cod]
+*$py.class
+
+venv/
+*.sqlite3
+*.sqlite
+*.csv
+*.prof
+*.env*
+!.env.example
