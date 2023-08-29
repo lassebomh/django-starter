@@ -1,20 +1,10 @@
-import UnoCSS  from 'unocss/vite';
-import FullReload  from 'vite-plugin-full-reload';
-import presetWind from '@unocss/preset-wind';
+import UnoCSS from 'unocss/vite';
+import FullReload from 'vite-plugin-full-reload';
 
 export default {
   plugins: [
     FullReload(['./**/*.html', './static/src/**/*'], { delay: 0 }),
-    UnoCSS({
-      presets: [
-        presetWind(),
-      ],
-      content: {
-        filesystem: [
-          "./**/templates/**/*.html"
-        ]
-      },
-    }),
+    UnoCSS(),
   ],
   root: './static/src',
   base: '/static/',

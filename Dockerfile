@@ -9,8 +9,17 @@ ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 ENV SHELL=/bin/bash
 
-COPY requirements.txt .
-RUN python -m pip install -r requirements.txt
+ENV POETRY_VERSION=1.6.1
+ENV POETRY_NO_INTERACTION=1
+ENV POETRY_VIRTUALENVS_CREATE=false
+# ENV POETRY_HOME='/usr/local'
+
+COPY poetry.lock pyproject.toml ./
+RUN python -m pip install "poetry==${POETRY_VERSION}"
+RUN python -m poetry install
+
+# COPY requirements.txt .
+# RUN python -m pip install -r requirements.txt
 
 WORKDIR /app
 
@@ -32,4 +41,4 @@ CMD [\
     "npm", "run", "build", "&&", \
     "python", "manage.py", "collectstatic", "&&", \
     "gunicorn", "--bind", "0.0.0.0:8000", "mysite.wsgi" \
-]
+    ]

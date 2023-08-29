@@ -1,15 +1,18 @@
 {
-    "liveSassCompile.settings.formats": [
-        {
-            "format": "compressed",
-            "extensionName": ".css",
-            "savePath": "/static/build/css",
-            "savePathReplacementPairs": null
+    "python.defaultInterpreterPath": "/usr/local/bin/python",
+    "mypy.runUsingActiveInterpreter": true,
+    "mypy.configFile": "pyproject.toml",
+    "unocss.underline": false,
+    "unocss.autocomplete.maxItems": 100,
+    "editor.formatOnSave": true,
+    "black-formatter.importStrategy": "fromEnvironment",
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.black-formatter",
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": true,
+            "source.fixAll": true
         }
-    ],
-    "search.exclude": {
-        "static/build": true,
-        "**/migrations/": true,
     },
-    "python.defaultInterpreterPath": "/usr/local/bin/python"
+    "python.formatting.provider": "none",
+    "ruff.importStrategy": "fromEnvironment",
 }
