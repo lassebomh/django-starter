@@ -10,9 +10,12 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 from pathlib import Path
+
+import django_stubs_ext
+
+django_stubs_ext.monkeypatch()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -104,9 +107,7 @@ DATABASES = {
 CACHES = {
     "default": {
         "BACKEND": "django.core.cache.backends.redis.RedisCache",
-        "LOCATION": "{REDIS_PROTOCOL}://{REDIS_USER}:{REDIS_PASSWORD}@{REDIS_HOST}:{REDIS_PORT}".format(
-            **os.environ
-        ),
+        "LOCATION": "{REDIS_PROTOCOL}://{REDIS_USER}:{REDIS_PASSWORD}@{REDIS_HOST}:{REDIS_PORT}".format(**os.environ),
     }
 }
 
@@ -166,7 +167,10 @@ STATIC_ROOT = BASE_DIR / "collectstatic"
 
 # Include DJANGO_VITE_ASSETS_PATH into STATICFILES_DIRS to be copied inside
 # when run command python manage.py collectstatic
-STATICFILES_DIRS = [DJANGO_VITE_ASSETS_PATH, BASE_DIR / "static"]
+STATICFILES_DIRS = [
+    DJANGO_VITE_ASSETS_PATH,
+    BASE_DIR / "static",
+]
 
 MEDIA_ROOT = BASE_DIR / "media"
 MEDIA_URL = "/media/"

@@ -1,18 +1,16 @@
 {
-    "python.defaultInterpreterPath": "/usr/local/bin/python",
     "mypy.runUsingActiveInterpreter": true,
     "mypy.configFile": "pyproject.toml",
     "unocss.underline": false,
     "unocss.autocomplete.maxItems": 100,
-    "editor.formatOnSave": true,
     "black-formatter.importStrategy": "fromEnvironment",
+    "ruff.importStrategy": "fromEnvironment",
+    "python.defaultInterpreterPath": "/usr/local/bin/python",
     "[python]": {
         "editor.defaultFormatter": "ms-python.black-formatter",
+        "editor.formatOnSave": true,
         "editor.codeActionsOnSave": {
             "source.organizeImports": true,
-            "source.fixAll": true
         }
     },
-    "python.formatting.provider": "none",
-    "ruff.importStrategy": "fromEnvironment",
 }
