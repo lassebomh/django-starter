@@ -17,6 +17,9 @@ django-stubs = "^4.2.3"
 black = "^23.7.0"
 ruff = "^0.0.286"
 django-stubs-ext = "^4.2.2"
+django-unicorn = "^0.54.0"
+redis = "^5.0.0"
+hiredis = "^2.2.3"
 
 [tool.mypy]
 enable_error_code = [
@@ -51,11 +54,11 @@ warn_unused_configs = true
 warn_unreachable = true
 warn_no_return = true
 warn_return_any = true
-disallow_any_unimported = true
 disallow_any_decorated = true
-disallow_subclassing_any = true
+
+disallow_subclassing_any = false
 ignore_missing_imports = true # Ignore missing types from imports
-# disallow_any_expr = true # Ignore any expression, evaluated as any
+disallow_any_expr = false # Ignore any expression, evaluated as any
 
 plugins = ["mypy_django_plugin.main"]
 

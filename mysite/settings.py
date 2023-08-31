@@ -31,8 +31,7 @@ ALLOWED_HOSTS = ["*"]
 # Application definition
 
 INSTALLED_APPS = [
-    "core",
-    "search",
+    # Builtin
     "wagtail.contrib.forms",
     "wagtail.contrib.redirects",
     "wagtail.embeds",
@@ -52,7 +51,12 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    # First party
+    "core",
+    "search",
+    # Third party
     "django_vite",
+    "django_unicorn",
 ]
 
 MIDDLEWARE = [

@@ -8,7 +8,6 @@ def index(request: HttpRequest) -> HttpResponse:
     context = {}
 
     now = datetime.now()
-
     formatted_now = now.strftime("%A, %d %B, %Y at %X")
     context["formatted_now"] = formatted_now
 

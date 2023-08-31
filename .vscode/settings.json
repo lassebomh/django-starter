@@ -3,6 +3,7 @@
     "mypy.configFile": "pyproject.toml",
     "unocss.underline": false,
     "unocss.autocomplete.maxItems": 100,
+    "unocss.colorPreview": false,
     "black-formatter.importStrategy": "fromEnvironment",
     "ruff.importStrategy": "fromEnvironment",
     "python.defaultInterpreterPath": "/usr/local/bin/python",

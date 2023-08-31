@@ -1,0 +1,10 @@
+{% load unicorn %}
+
+<div>
+    <label class="label" for="name" >Your name</label>
+    <input unicorn:model="name" class="entry" type="text" id="text" />
+    <br />
+    
+    Hello {{ name|title }}
+</div>
+
