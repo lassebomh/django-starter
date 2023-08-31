@@ -1258,4 +1258,4 @@ testing = ["Pillow (>=9.1.0,<11.0.0)", "Wand (>=0.6,<1.0)", "black (==22.3.0)", 
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "567b6dc7c6214a8cfdd8e752f5e0f8244729da8ff07c5cf14de5fd951d72e3bc"
+content-hash = "baa2e3dabca0caad935105c2e27d4c5c1bdedd082fe23f42e1ac98113db71b4f"

@@ -35,9 +35,9 @@ COPY . .
 
 RUN chown -R appuser /app
 
-USER appuser
-
 EXPOSE 8000
+
+USER appuser
 
 CMD bash
 
