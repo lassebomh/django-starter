@@ -40,5 +40,5 @@ CMD [\
     "python", "manage.py", "migrate", "&&", \
     "npm", "run", "build", "&&", \
     "python", "manage.py", "collectstatic", "&&", \
-    "gunicorn", "--bind", "0.0.0.0:8000", "mysite.wsgi" \
-    ]
+    "gunicorn", "--bind", "0.0.0.0:8000", "--worker-tmp-dir", "/dev/shm", "mysite.wsgi" \
+]
