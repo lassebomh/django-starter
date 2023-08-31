@@ -1,7 +1,7 @@
 {
 	"name": "Django dev container",
 	"dockerComposeFile": [
-		"docker-compose.yml"
+		"../.ci/docker-compose.dev.yml"
 	],
 	"service": "django",
 	"workspaceFolder": "/app/",

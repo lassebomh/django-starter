@@ -3,10 +3,10 @@ import FullReload from 'vite-plugin-full-reload';
 
 export default {
   plugins: [
-    FullReload(['./**/*.html', './static/src/**/*'], { delay: 0 }),
+    FullReload(['../**/*.html', './src/**/*'], { delay: 0 }),
     UnoCSS(),
   ],
-  root: './static/src',
+  root: 'src/',
   base: '/static/',
   server: {
     host: true,
@@ -23,13 +23,13 @@ export default {
     },
   },
   build: {
-    outDir: './static/dist',
+    outDir: '../static/dist',
     assetsDir: '',
     manifest: true,
     emptyOutDir: true,
     rollupOptions: {
       input: {
-        main: 'main.js',
+        main: 'src/main.js',
       },
       output: {
         chunkFileNames: undefined,

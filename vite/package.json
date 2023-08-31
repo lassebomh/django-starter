@@ -2,7 +2,7 @@
   "private": true,
   "scripts": {
     "dev": "vite",
-    "build": "vite build"
+    "build": "vite build --debug"
   },
   "dependencies": {
     "@unocss/preset-wind": "^0.55.1",

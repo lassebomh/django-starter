@@ -23,6 +23,7 @@ django-stubs = "^4.2.3"
 django-stubs-ext = "^4.2.2"
 
 [tool.mypy]
+cache_dir = ".venv/mypy_cache"
 enable_error_code = [
     "truthy-bool",
     "truthy-iterable",
