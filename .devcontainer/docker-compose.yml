@@ -10,11 +10,11 @@ services:
         condition: service_healthy
     build:
       context: ..
-      dockerfile: ./Dockerfile
+      dockerfile: ./New.dockerfile
+      target: dev
     command: sleep infinity
     volumes:
       - ..:/app
-      - /app/node_modules/
 
   postgres:
     env_file: ../.env.dev

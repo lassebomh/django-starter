@@ -11,6 +11,7 @@ services:
     build:
       context: .
       dockerfile: ./Dockerfile
+      target: test
     environment:
       - MODE=${MODE}
       - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
@@ -25,10 +26,6 @@ services:
       - REDIS_PROTOCOL=${REDIS_PROTOCOL}
       - REDIS_PORT=${REDIS_PORT}
 
-    command: sh -c "python manage.py migrate &&
-            npm run build &&
-            python manage.py collectstatic &&
-            python manage.py test"
     ports:
       - 8000:8000
 
