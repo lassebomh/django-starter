@@ -1,8 +1,8 @@
 version: '3.4'
 services:
   django:
-    image: mysite-django-dev
-    env_file: ../.env.dev
+    image: mysite-django-prod
+    env_file: ../.env.prod
     depends_on:
       redis:
         condition: service_healthy
@@ -11,15 +11,13 @@ services:
     build:
       context: ..
       dockerfile: ./.ci/Dockerfile
-      target: dev
-    command: sleep infinity
-    volumes:
-      - ..:/app
-      - /app/vite/node_modules/
+      target: prod
+    ports:
+      - 8000:8000
 
   postgres:
-    env_file: ../.env.dev
     image: postgres:latest
+    env_file: ../.env.prod
     ports:
       - "5432:5432"
     healthcheck:
@@ -27,8 +25,6 @@ services:
       interval: 1s
       timeout: 3s
       retries: 5
-    volumes:
-      - postgres_data:/var/lib/postgresql/data/
 
   redis:
     image: redis:latest
@@ -39,9 +35,3 @@ services:
       retries: 5
     ports:
       - "6379:6379"
-    volumes:
-      - redis_data:/data
-
-volumes:
-  postgres_data:
-  redis_data:

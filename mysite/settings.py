@@ -73,6 +73,9 @@ MIDDLEWARE = [
     "wagtail.contrib.redirects.middleware.RedirectMiddleware",
 ]
 
+if os.environ.get("HOST_STATIC", 'false') == 'true':
+    MIDDLEWARE += ["whitenoise.middleware.WhiteNoiseMiddleware"]
+
 ROOT_URLCONF = "mysite.urls"
 
 TEMPLATES = [
@@ -150,6 +153,8 @@ USE_L10N = True
 
 USE_TZ = True
 
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/

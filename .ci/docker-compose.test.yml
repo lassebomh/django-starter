@@ -1,7 +1,7 @@
 version: '3.4'
 services:
   django:
-    image: mysite-django
+    image: mysite-django-test
     depends_on:
       redis:
         condition: service_healthy

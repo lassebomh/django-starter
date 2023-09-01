@@ -25,7 +25,7 @@ RUN curl -sSL https://install.python-poetry.org | python -
 
 WORKDIR $PYSETUP_PATH
 COPY ./poetry.lock ./pyproject.toml ./
-RUN poetry install --only-root
+RUN poetry install --without dev
 
 WORKDIR /app/$STATIC_SRC_DIR
 COPY ./$STATIC_SRC_DIR/package*.json .
@@ -34,8 +34,6 @@ RUN npm ci
 
 
 FROM builder as dev
-
-ENV POETRY_VIRTUALENVS_IN_PROJECT=false
 
 WORKDIR $PYSETUP_PATH
 RUN poetry install
@@ -56,6 +54,7 @@ CMD bash
 FROM builder as prod-builder
 
 WORKDIR /app/
+
 COPY . .
 
 WORKDIR /app/$STATIC_SRC_DIR
@@ -81,12 +80,12 @@ FROM prod-runtime as prod
 
 EXPOSE 8000
 
-RUN chmod +x .ci/entrypoint.prod.sh
-CMD [".ci/entrypoint.prod.sh"]
+COPY --chmod=777 .ci/entrypoint.prod.sh .
+CMD ["./entrypoint.prod.sh"]
 
 
 
 FROM prod-runtime as test
 
-RUN chmod +x .ci/entrypoint.test.sh
-CMD [".ci/entrypoint.test.sh"]
+COPY --chmod=777 .ci/entrypoint.test.sh .
+CMD ["./entrypoint.test.sh"]

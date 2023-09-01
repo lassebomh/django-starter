@@ -8,16 +8,34 @@
 	"shutdownAction": "stopCompose",
 	"customizations": {
 		"vscode": {
+			"settings": {
+				"mypy.runUsingActiveInterpreter": true,
+				"mypy.configFile": "pyproject.toml",
+				"unocss.underline": false,
+				"unocss.autocomplete.maxItems": 100,
+				"unocss.colorPreview": false,
+				"black-formatter.importStrategy": "fromEnvironment",
+				"ruff.importStrategy": "fromEnvironment",
+				"python.terminal.activateEnvironment": false,
+				"python.defaultInterpreterPath": "/opt/pysetup/.venv/bin/python",
+				"[python]": {
+					"editor.defaultFormatter": "ms-python.black-formatter",
+					"editor.formatOnSave": true,
+					"editor.codeActionsOnSave": {
+						"source.organizeImports": true
+					}
+				}
+			},
 			"extensions": [
 				"ms-vscode-remote.remote-containers",
+				"ms-python.python",
 				"ms-python.vscode-pylance",
 				"ms-python.black-formatter",
 				"ms-azuretools.vscode-docker",
 				"matangover.mypy",
 				"antfu.unocss",
 				"tamasfe.even-better-toml",
-				"charliermarsh.ruff",
-				"ms-python.python"
+				"charliermarsh.ruff"
 			]
 		}
 	}
