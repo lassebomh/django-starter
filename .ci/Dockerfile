@@ -54,16 +54,16 @@ RUN cd ./vite && npm ci
 COPY ./vite ./vite
 RUN cd ./vite && npm run build
 
+
 FROM python:3.11-slim as prod-runtime
 
 WORKDIR /app
 
-ENV VIRTUAL_ENV=/app/.venv \
-    PATH="/app/.venv/bin:$PATH" \
-    MODE=${MODE} \
-    STATIC_DIST_DIR=${STATIC_DIST_DIR}
+COPY --from=prod-builder /app/.venv /app/.venv
 
-COPY --from=prod-builder ${VIRTUAL_ENV} ${VIRTUAL_ENV}
+RUN chmod +x /app/.venv/bin/python
+RUN chmod +x /app/.venv/bin/pip
+
 COPY --from=prod-builder ${STATIC_DIST_DIR} ${STATIC_DIST_DIR}
 
 RUN adduser -u 5678 --disabled-password --gecos "" appuser
@@ -72,21 +72,29 @@ COPY --chown=appuser . .
 USER appuser
 
 
-FROM prod-runtime as prod-setup
-
-
-
-RUN python manage.py collectstatic
-RUN python manage.py migrate
-
-
-FROM prod-setup as prod
+FROM prod-runtime as prod
 
 EXPOSE 8000
 
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "--worker-tmp-dir", "/dev/shm", "mysite.wsgi"]
+CMD [\
+    "python", "manage.py", "migrate", "&&", \
+    "python", "manage.py", "collectstatic", "&&", \
+    "gunicorn", "--bind", "0.0.0.0:8000", "--worker-tmp-dir", "/dev/shm", "mysite.wsgi" \
+]
 
 
-FROM prod-setup as test
+FROM prod-runtime as test
 
-CMD ["python", "manage.py", "test"]
+ENV VIRTUAL_ENV="/app/.venv" \
+    PATH="/app/.venv/bin:$PATH" \
+    STATIC_DIST_DIR=${STATIC_DIST_DIR}
+
+RUN echo which python
+RUN echo whereis python
+
+
+CMD [\
+    "python", "manage.py", "migrate", "&&", \
+    "python", "manage.py", "collectstatic", "&&", \
+    "python", "manage.py", "test" \
+]
