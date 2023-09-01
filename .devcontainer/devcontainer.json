@@ -5,6 +5,7 @@
 	],
 	"service": "django",
 	"workspaceFolder": "/app/",
+	"shutdownAction": "stopCompose",
 	"customizations": {
 		"vscode": {
 			"extensions": [

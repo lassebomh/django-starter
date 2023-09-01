@@ -9,11 +9,11 @@ ENV PYTHONUNBUFFERED=1 \
     POETRY_VIRTUALENVS_IN_PROJECT=true \
     POETRY_NO_INTERACTION=1 \
     PYSETUP_PATH="/opt/pysetup" \
-    VENV_PATH="/opt/pysetup/.venv" \
+    VIRTUAL_ENV="/opt/pysetup/.venv" \
     STATIC_DIST_DIR="/app/static/dist" \
     STATIC_SRC_DIR="vite"
 
-ENV PATH="$POETRY_HOME/bin:$VENV_PATH/bin:$PATH"
+ENV PATH="$POETRY_HOME/bin:$VIRTUAL_ENV/bin:$PATH"
 
 
 
@@ -25,7 +25,7 @@ RUN curl -sSL https://install.python-poetry.org | python -
 
 WORKDIR $PYSETUP_PATH
 COPY ./poetry.lock ./pyproject.toml ./
-RUN poetry  install --no-dev --verbose
+RUN poetry install --only-root
 
 WORKDIR /app/$STATIC_SRC_DIR
 COPY ./$STATIC_SRC_DIR/package*.json .
@@ -34,6 +34,8 @@ RUN npm ci
 
 
 FROM builder as dev
+
+ENV POETRY_VIRTUALENVS_IN_PROJECT=false
 
 WORKDIR $PYSETUP_PATH
 RUN poetry install
