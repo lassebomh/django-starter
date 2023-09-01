@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: test
     env:
-      MODE: development # ${{ vars.MODE }}
+      MODE: production # ${{ vars.MODE }}
       DJANGO_SECRET_KEY: asdfghjkl123456789asdfghjkl23456789 # ${{ secrets.DJANGO_SECRET_KEY }}
       POSTGRES_DB: postgres # ${{ secrets.POSTGRES_DB }}
       POSTGRES_USER: postgres # ${{ secrets.POSTGRES_USER }}
