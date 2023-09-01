@@ -11,3 +11,4 @@ venv/
 *.prof
 *.env*
 !.env.example
+static/dist

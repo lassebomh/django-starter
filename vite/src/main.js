@@ -1,5 +1,4 @@
-// import '../css/style.css';
-// import 'vite/modulepreload-polyfill';
+import './style.css';
 import '@unocss/reset/tailwind.css'
 import 'uno.css'
 

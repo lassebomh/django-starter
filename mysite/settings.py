@@ -73,7 +73,7 @@ MIDDLEWARE = [
     "wagtail.contrib.redirects.middleware.RedirectMiddleware",
 ]
 
-if os.environ.get("HOST_STATIC", 'false') == 'true':
+if os.environ.get("HOST_STATIC", "false") == "true":
     MIDDLEWARE += ["whitenoise.middleware.WhiteNoiseMiddleware"]
 
 ROOT_URLCONF = "mysite.urls"
@@ -82,7 +82,7 @@ TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         "DIRS": [
-            BASE_DIR / "templates",
+            # BASE_DIR / "templates",
         ],
         "APP_DIRS": True,
         "OPTIONS": {
@@ -172,7 +172,7 @@ STATIC_URL = "/static/"
 DJANGO_VITE_ASSETS_PATH = os.environ["STATIC_DIST_DIR"]
 
 # If use HMR or not.
-DJANGO_VITE_DEV_MODE = DEBUG
+DJANGO_VITE_DEV_MODE = False
 
 # Name of static files folder (after called python manage.py collectstatic)
 STATIC_ROOT = BASE_DIR / "collectstatic"
