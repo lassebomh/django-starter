@@ -15,8 +15,7 @@ services:
     command: sleep infinity
     volumes:
       - ..:/app
-      - /app/node_modules/
-      - /app/.venv/
+      - /app/vite/node_modules/
 
   postgres:
     env_file: ../.env.dev

@@ -1,100 +1,90 @@
-ARG STATIC_DIST_DIR=/app/static/dist
+FROM python:3.11-slim as base
 
-FROM python:3.11 as base
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1 \
+    PIP_NO_CACHE_DIR=off \
+    PIP_DISABLE_PIP_VERSION_CHECK=on \
+    PIP_DEFAULT_TIMEOUT=100 \
+    POETRY_HOME="/opt/poetry" \
+    POETRY_VIRTUALENVS_IN_PROJECT=true \
+    POETRY_NO_INTERACTION=1 \
+    PYSETUP_PATH="/opt/pysetup" \
+    VENV_PATH="/opt/pysetup/.venv" \
+    STATIC_DIST_DIR="/app/static/dist" \
+    STATIC_SRC_DIR="vite"
 
-ENV POETRY_NO_INTERACTION=1 \
-    POETRY_VIRTUALENVS_IN_PROJECT=1 \
-    POETRY_VIRTUALENVS_CREATE=1 \
-    POETRY_CACHE_DIR=/tmp/poetry_cache \
-    POETRY_VERSION=${POETRY_VERSION}
+ENV PATH="$POETRY_HOME/bin:$VENV_PATH/bin:$PATH"
 
-RUN apt update
-RUN apt install -y --no-install-recommends nodejs npm
 
-RUN pip install poetry==1.6.1
+
+FROM base as builder
+
+RUN apt update && apt install -y --no-install-recommends build-essential curl nodejs npm
+
+RUN curl -sSL https://install.python-poetry.org | python -
+
+WORKDIR $PYSETUP_PATH
+COPY ./poetry.lock ./pyproject.toml ./
+RUN poetry  install --no-dev --verbose
+
+WORKDIR /app/$STATIC_SRC_DIR
+COPY ./$STATIC_SRC_DIR/package*.json .
+RUN npm ci
+
+
+
+FROM builder as dev
+
+WORKDIR $PYSETUP_PATH
+RUN poetry install
+
+WORKDIR /app/$STATIC_SRC_DIR
+RUN npm install
 
 WORKDIR /app
 
-
-FROM base as dev
-
-ENV VIRTUAL_ENV=/app/.venv \
-    PATH="/app/.venv/bin:$PATH" \
-    STATIC_DIST_DIR=${STATIC_DIST_DIR} \
-    POETRY_CACHE_DIR=/app/.venv/poetry_cache
-
-RUN adduser -u 5678 --disabled-password --gecos "" appuser
-
-COPY pyproject.toml poetry.lock ./
-RUN poetry install --no-root
-
-COPY package*.json .
-RUN  npm install
-
 COPY . .
 
-RUN chmod 777 /app/node_modules
-RUN chown -R appuser /app
-
 EXPOSE 8000
-
-USER appuser
 
 CMD bash
 
 
-FROM base as prod-builder
 
-COPY pyproject.toml poetry.lock ./
-RUN poetry install --without dev --no-root && rm -rf $POETRY_CACHE_DIR
+FROM builder as prod-builder
 
-COPY ./vite/package*.json ./vite/
-RUN cd ./vite && npm ci
+WORKDIR /app/
+COPY . .
 
-COPY ./vite ./vite
-RUN cd ./vite && npm run build
+WORKDIR /app/$STATIC_SRC_DIR
+RUN npm run build
+
+WORKDIR /
 
 
-FROM python:3.11-slim as prod-runtime
+
+FROM base as prod-runtime
+
+COPY --from=prod-builder $POETRY_HOME $POETRY_HOME
+COPY --from=prod-builder $PYSETUP_PATH $PYSETUP_PATH
+COPY --from=prod-builder $STATIC_DIST_DIR $STATIC_DIST_DIR
 
 WORKDIR /app
 
-COPY --from=prod-builder /app/.venv /app/.venv
+COPY . .
 
-RUN chmod +x /app/.venv/bin/python
-RUN chmod +x /app/.venv/bin/pip
-
-COPY --from=prod-builder ${STATIC_DIST_DIR} ${STATIC_DIST_DIR}
-
-RUN adduser -u 5678 --disabled-password --gecos "" appuser
-COPY --chown=appuser . .
-
-USER appuser
 
 
 FROM prod-runtime as prod
 
 EXPOSE 8000
 
-CMD [\
-    "python", "manage.py", "migrate", "&&", \
-    "python", "manage.py", "collectstatic", "&&", \
-    "gunicorn", "--bind", "0.0.0.0:8000", "--worker-tmp-dir", "/dev/shm", "mysite.wsgi" \
-]
+RUN chmod +x .ci/entrypoint.prod.sh
+CMD [".ci/entrypoint.prod.sh"]
+
 
 
 FROM prod-runtime as test
 
-ENV VIRTUAL_ENV="/app/.venv" \
-    PATH="/app/.venv/bin:$PATH" \
-    STATIC_DIST_DIR=${STATIC_DIST_DIR}
-
-RUN echo which python
-RUN echo whereis python
-
-
-CMD [\
-    "python", "manage.py", "migrate", "&&", \
-    "python", "manage.py", "collectstatic", "&&", \
-    "python", "manage.py", "test" \
-]
+RUN chmod +x .ci/entrypoint.test.sh
+CMD [".ci/entrypoint.test.sh"]

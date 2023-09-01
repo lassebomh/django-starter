@@ -10,7 +10,7 @@ export default {
     },
     content: {
         filesystem: [
-            "./**/templates/**/*.html"
+            "../**/templates/**/*.html"
         ]
     },
 }

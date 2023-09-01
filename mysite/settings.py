@@ -13,9 +13,12 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 import os
 from pathlib import Path
 
-import django_stubs_ext
+try:
+    import django_stubs_ext
 
-django_stubs_ext.monkeypatch()
+    django_stubs_ext.monkeypatch()
+except:
+    ...
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -161,7 +164,7 @@ STATICFILES_STORAGE = "django.contrib.staticfiles.storage.ManifestStaticFilesSto
 STATIC_URL = "/static/"
 
 # Where ViteJS assets are built.
-DJANGO_VITE_ASSETS_PATH = BASE_DIR / "static" / "dist"
+DJANGO_VITE_ASSETS_PATH = os.environ["STATIC_DIST_DIR"]
 
 # If use HMR or not.
 DJANGO_VITE_DEV_MODE = DEBUG

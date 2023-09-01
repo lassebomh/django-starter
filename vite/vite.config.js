@@ -6,7 +6,7 @@ export default {
     FullReload(['../**/*.html', './src/**/*'], { delay: 0 }),
     UnoCSS(),
   ],
-  root: 'src/',
+  root: '/app/' + process.env.STATIC_SRC_DIR + "/src",
   base: '/static/',
   server: {
     host: true,
@@ -23,7 +23,7 @@ export default {
     },
   },
   build: {
-    outDir: '../static/dist',
+    outDir: process.env.STATIC_DIST_DIR,
     assetsDir: '',
     manifest: true,
     emptyOutDir: true,
