@@ -5,6 +5,7 @@
 	],
 	"service": "django",
 	"workspaceFolder": "/app/",
+	"postAttachCommand": "cd vite && npm run dev",
 	"shutdownAction": "stopCompose",
 	"customizations": {
 		"vscode": {
