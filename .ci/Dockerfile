@@ -1,4 +1,4 @@
-FROM python:3.11-slim as base
+FROM python:3.11-slim-bookworm as base
 
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
@@ -26,8 +26,10 @@ RUN apt-get update && \
     curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg && \
     echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_MAJOR.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list && \
     apt-get update && \
-    apt-get install -y nodejs && \
-    curl -sSL https://install.python-poetry.org | python -
+    apt-get install -y nodejs
+    
+COPY .ci/install-poetry.py .
+RUN python install-poetry.py
 
 WORKDIR $PYSETUP_PATH
 COPY ./poetry.lock ./pyproject.toml ./
