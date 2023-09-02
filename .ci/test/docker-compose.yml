@@ -14,13 +14,13 @@ services:
       - "8000:8000"
 
   postgres:
-    image: postgres:15-alpine
+    image: postgres:15-bookworm
     expose:
       - "5432:5432"
     env_file:
       - ../../.env.example
 
   redis:
-    image: redis:7-alpine
+    image: redis:7-bookworm
     expose:
       - "6379:6379"
