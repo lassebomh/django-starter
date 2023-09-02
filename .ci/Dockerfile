@@ -28,7 +28,10 @@ RUN apt-get update && \
     echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_MAJOR.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list && \
     apt-get update && \
     apt-get install -y nodejs && \
-    pip install poetry==$POETRY_VERSION
+    \
+    python -m venv $POETRY_HOME && \
+    pip install poetry==$POETRY_VERSION && \
+    $POETRY_HOME/bin/pip install poetry==$POETRY_VERSION
 
 WORKDIR $PYSETUP_PATH
 COPY ./poetry.lock ./pyproject.toml ./
