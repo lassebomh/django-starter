@@ -7,13 +7,16 @@ jobs:
   test:
     name: Run test suite
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./.ci/test
       
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
 
     - name: Prepare services
-      run: cd .ci/test && docker compose pull && docker compose build
+      run: docker compose pull && docker compose build
 
     - name: Run approval tests
       run: docker compose run django
