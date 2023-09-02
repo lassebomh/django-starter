@@ -29,7 +29,7 @@ RUN npm run build
 
 WORKDIR /app
 
-RUN python manage.py collectstatic
+RUN python manage.py collectstatic --noinput
 
 COPY --chmod=777 .ci/test/entrypoint.sh .
 CMD ["./entrypoint.sh"]
