@@ -12,8 +12,8 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Build container for approval tests
-      run: docker compose -f .ci/test/docker-compose.yml build
+    - name: Prepare services
+      run: cd .ci/test && docker compose pull && docker compose build
 
     - name: Run approval tests
-      run: docker compose -f .ci/test/docker-compose.yml run django
+      run: docker compose run django
