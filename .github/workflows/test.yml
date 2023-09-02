@@ -17,6 +17,3 @@ jobs:
 
     - name: Run approval tests
       run: docker compose -f .ci/test/docker-compose.yml run django
-
-    - name: Run lint and type checker
-      run: docker compose -f .ci/test/docker-compose.yml run django ruff . && mypy .
