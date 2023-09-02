@@ -1,24 +1,34 @@
 import UnoCSS from 'unocss/vite';
 import FullReload from 'vite-plugin-full-reload';
 
+const MODE = process.env.MODE
+
+var plugins = []
+var input = {
+  main: 'src/main.js',
+}
+
+if (MODE == 'development'){
+  plugins.push(FullReload(['../**/*.html', './src/**/*'], { delay: 0 }))
+  input['unoruntime'] = 'src/uno-runtime.js'
+} else {
+  plugins.push(UnoCSS())
+  input['unobuild'] = 'src/uno-build.js'
+}
+
 export default {
-  plugins: [
-    FullReload(['../**/*.html', './src/**/*'], { delay: 0 }),
-    UnoCSS(),
-  ],
+  plugins: plugins,
   root: '/app/' + process.env.STATIC_SRC_DIR + "/src",
   base: '/static/',
   server: {
     host: true,
     port: 3000,
     open: false,
-    // hmr: false,
     hmr: {
       host: 'localhost',
       port: 3000,
     },
     watch: {
-      // usePolling: true,
       disableGlobbing: false,
     },
   },
@@ -28,9 +38,7 @@ export default {
     manifest: true,
     emptyOutDir: true,
     rollupOptions: {
-      input: {
-        main: 'src/main.js',
-      },
+      input: input,
       output: {
         chunkFileNames: undefined,
       },

@@ -7,27 +7,16 @@ jobs:
   test:
     name: Run test suite
     runs-on: ubuntu-latest
-    environment: test
-    env:
-      MODE: production # ${{ vars.MODE }}
-      DJANGO_SECRET_KEY: asdfghjkl123456789asdfghjkl23456789 # ${{ secrets.DJANGO_SECRET_KEY }}
-      POSTGRES_DB: postgres # ${{ secrets.POSTGRES_DB }}
-      POSTGRES_USER: postgres # ${{ secrets.POSTGRES_USER }}
-      POSTGRES_PASSWORD: postgres # ${{ secrets.POSTGRES_PASSWORD }}
-      POSTGRES_HOST: postgres # ${{ secrets.POSTGRES_HOST }}
-      POSTGRES_PORT: postgres # ${{ secrets.POSTGRES_PORT }}
-      REDIS_USER: default # ${{ secrets.REDIS_USER }}
-      REDIS_PASSWORD: redispw # ${{ secrets.REDIS_PASSWORD }}
-      REDIS_HOST: redis # ${{ secrets.REDIS_HOST }}
-      REDIS_PROTOCOL: redis # ${{ secrets.REDIS_PROTOCOL }}
-      REDIS_PORT: 6379 # ${{ secrets.REDIS_PORT }}
       
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
 
     - name: Build container for approval tests
-      run: docker compose -f .ci/docker-compose.test.yml build
+      run: docker compose -f .ci/test/docker-compose.yml build
 
     - name: Run approval tests
-      run: docker compose -f .ci/docker-compose.test.yml run django
+      run: docker compose -f .ci/test/docker-compose.yml run django
+
+    - name: Run lint and type checker
+      run: docker compose -f .ci/test/docker-compose.yml run django ruff . && mypy .

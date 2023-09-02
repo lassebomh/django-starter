@@ -1,0 +1,53 @@
+version: '3.4'
+services:
+  django:
+    depends_on:
+      redis:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+    build:
+      context: ../..
+      dockerfile: ./.ci/Dockerfile
+      target: test
+    environment:
+      - MODE=test
+      - DJANGO_SECRET_KEY=asdfghjkl123456789asdfghjkl23456789
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=postgres
+      - REDIS_USER=default
+      - REDIS_PASSWORD=redispw
+      - REDIS_HOST=redis
+      - REDIS_PROTOCOL=redis
+      - REDIS_PORT=6379
+    ports:
+      - "8000:8000"
+
+  postgres:
+    image: postgres:15-alpine
+    expose:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=postgres
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 1s
+      timeout: 3s
+      retries: 5
+
+  redis:
+    image: redis:7-apline
+    healthcheck:
+      test: [ "CMD", "redis-cli", "--raw", "incr", "ping" ]
+      interval: 1s
+      timeout: 3s
+      retries: 5
+    expose:
+      - "6379:6379"

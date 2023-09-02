@@ -1,7 +1,7 @@
 {
 	"name": "Django dev container",
 	"dockerComposeFile": [
-		"../.ci/docker-compose.dev.yml"
+		"../.ci/dev/docker-compose.yml"
 	],
 	"service": "django",
 	"workspaceFolder": "/app/",
@@ -18,12 +18,10 @@
 				"ruff.importStrategy": "fromEnvironment",
 				"python.terminal.activateEnvironment": false,
 				"python.defaultInterpreterPath": "/opt/pysetup/.venv/bin/python",
-				"[python]": {
-					"editor.defaultFormatter": "ms-python.black-formatter",
-					"editor.formatOnSave": true,
-					"editor.codeActionsOnSave": {
-						"source.organizeImports": true
-					}
+				"editor.defaultFormatter": "ms-python.black-formatter",
+				"editor.formatOnSave": true,
+				"editor.codeActionsOnSave": {
+					"source.organizeImports": true
 				}
 			},
 			"extensions": [

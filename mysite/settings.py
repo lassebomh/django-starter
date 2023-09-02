@@ -11,7 +11,30 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 import os
+from enum import Enum
 from pathlib import Path
+
+
+class Modes(Enum):
+    DEV = "development"
+    # Lint & typecheck
+    # Debug mode
+    # Vite HMR
+    # UnoCSS runtime
+    # Dev server
+
+    TEST = "test"
+    # Lint & typecheck
+    # Vite build
+    # UnoCSS build
+    # Serve staticfiles w/ whitenoise
+    # Gunicorn
+
+    PROD = "production"
+    # Vite build
+    # UnoCSS build
+    # Gunicorn
+
 
 try:
     import django_stubs_ext
@@ -22,7 +45,9 @@ except:
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-DEBUG = os.environ["MODE"] != "production"
+MODE = Modes(os.environ["MODE"])
+
+DEBUG = MODE == Modes.DEV
 
 SECRET_KEY = os.environ["DJANGO_SECRET_KEY"]
 
@@ -73,7 +98,7 @@ MIDDLEWARE = [
     "wagtail.contrib.redirects.middleware.RedirectMiddleware",
 ]
 
-if os.environ.get("HOST_STATIC", "false") == "true":
+if MODE == Modes.TEST:
     MIDDLEWARE += ["whitenoise.middleware.WhiteNoiseMiddleware"]
 
 ROOT_URLCONF = "mysite.urls"
@@ -144,17 +169,17 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
 LANGUAGE_CODE = "en-us"
-
 TIME_ZONE = "UTC"
-
 USE_I18N = True
-
 USE_L10N = True
-
 USE_TZ = True
 
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
+
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
@@ -172,7 +197,7 @@ STATIC_URL = "/static/"
 DJANGO_VITE_ASSETS_PATH = os.environ["STATIC_DIST_DIR"]
 
 # If use HMR or not.
-DJANGO_VITE_DEV_MODE = False
+DJANGO_VITE_DEV_MODE = MODE == Modes.DEV
 
 # Name of static files folder (after called python manage.py collectstatic)
 STATIC_ROOT = BASE_DIR / "collectstatic"

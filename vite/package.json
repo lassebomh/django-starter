@@ -10,6 +10,7 @@
     "vite": "^4.4.9"
   },
   "devDependencies": {
+    "@unocss/runtime": "^0.55.4",
     "vite-plugin-full-reload": "^1.0.5"
   }
 }

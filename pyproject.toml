@@ -36,8 +36,6 @@ enable_error_code = [
 ]
 allow_redefinition = false
 check_untyped_defs = true
-disallow_any_explicit = true
-disallow_any_generics = true
 disallow_untyped_defs = true
 disallow_untyped_decorators = true
 disallow_untyped_calls = true
@@ -57,11 +55,14 @@ warn_unused_configs = true
 warn_unreachable = true
 warn_no_return = true
 warn_return_any = true
+
+disallow_any_explicit = false
+disallow_any_generics = true
 disallow_any_decorated = true
+disallow_any_expr = false # Ignore any expression, evaluated as any
 
 disallow_subclassing_any = false
 ignore_missing_imports = true # Ignore missing types from imports
-disallow_any_expr = false # Ignore any expression, evaluated as any
 
 plugins = ["mypy_django_plugin.main"]
 
@@ -71,6 +72,7 @@ strict_settings = true
 
 [tool.ruff]
 line-length = 120
+cache-dir = "/opt/ruff_cache"
 
 [tool.black]
 line-length = 120

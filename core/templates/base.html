@@ -33,15 +33,23 @@
         {% endif %}
 
         <script src="https://unpkg.com/alpinejs" defer></script>
-        
-        {% vite_hmr_client %}
+
         {% vite_asset 'main.js' %}
 
         {% unicorn_scripts %}
+
+        {% if debug %}
+            <style>[un-cloak] {display: none;}</style>
+            {% vite_hmr_client %}
+            {% vite_asset 'uno-runtime.js' %}
+        {% else %}
+            {% vite_asset 'uno-build.js' %}
+        {% endif %}
     </head>
 
-    <body class="h-screen bg-gray-50 {% block body_class %}{% endblock %}">
-        {% comment %} {% wagtailuserbar %} {% endcomment %}
+    <body class="h-screen bg-gray-50 {% block body_class %}{% endblock %}" {% if debug %}un-cloak{% endif %}>
+        {% wagtailuserbar %}
+
         {% comment %} <div x-data="{
             bannerVisible: false,
             bannerVisibleAfter: 300,

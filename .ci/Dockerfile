@@ -74,18 +74,18 @@ WORKDIR /app
 
 COPY . .
 
+EXPOSE 8000
+
 
 
 FROM prod-runtime as prod
 
-EXPOSE 8000
-
-COPY --chmod=777 .ci/entrypoint.prod.sh .
-CMD ["./entrypoint.prod.sh"]
+COPY --chmod=777 .ci/prod/entrypoint.sh .
+CMD ["./entrypoint.sh"]
 
 
 
 FROM prod-runtime as test
 
-COPY --chmod=777 .ci/entrypoint.test.sh .
-CMD ["./entrypoint.test.sh"]
+COPY --chmod=777 .ci/test/entrypoint.sh .
+CMD ["./entrypoint.sh"]
