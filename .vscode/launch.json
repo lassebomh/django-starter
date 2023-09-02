@@ -8,6 +8,7 @@
             "name": "Debug Django",
             "type": "python",
             "python": "/opt/pysetup/.venv/bin/python",
+            // "preLaunchTask": "Start vite",
             "request": "launch",
             "program": "${workspaceFolder}/manage.py",
             "args": [
@@ -15,6 +16,15 @@
             ],
             "django": true,
             "justMyCode": true
-        }
+        },
+        {
+            "name": "Debug Worker",
+            "type": "python",
+            "python": "/opt/pysetup/.venv/bin/python",
+            "request": "launch",
+            "module": "celery",
+            "args": ["-A", "mysite.celery", "worker", "-l", "info"],
+            "justMyCode": true
+        },
     ]
 }

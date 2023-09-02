@@ -11,27 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 import os
-from enum import Enum
 from pathlib import Path
-
-class Modes(Enum):
-    DEV = "development"
-    # Lint & typecheck
-    # Debug mode
-    # Vite HMR
-    # UnoCSS runtime
-    # Dev server
-
-    TEST = "test"
-    # Vite build
-    # UnoCSS build
-    # Serve staticfiles w/ whitenoise
-    # Gunicorn
-
-    PROD = "production"
-    # Vite build
-    # UnoCSS build
-    # Gunicorn
 
 getenv = os.environ.get
 
@@ -44,9 +24,9 @@ except:
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-MODE = Modes(getenv("MODE", "test"))
+MODE = getenv("MODE")
 
-DEBUG = MODE == Modes.DEV
+DEBUG = MODE == "development"
 
 SECRET_KEY = getenv("DJANGO_SECRET_KEY")
 
@@ -84,6 +64,8 @@ INSTALLED_APPS = [
     # Third party
     "django_vite",
     "django_unicorn",
+    "django_celery_results",
+    "django_celery_beat",
 ]
 
 MIDDLEWARE = [
@@ -97,7 +79,7 @@ MIDDLEWARE = [
     "wagtail.contrib.redirects.middleware.RedirectMiddleware",
 ]
 
-if MODE == Modes.TEST:
+if MODE == "test":
     MIDDLEWARE += ["whitenoise.middleware.WhiteNoiseMiddleware"]
 
 ROOT_URLCONF = "mysite.urls"
@@ -144,6 +126,17 @@ CACHES = {
         "LOCATION": f"{getenv('REDIS_PROTOCOL')}://{getenv('REDIS_USER')}:{getenv('REDIS_PASSWORD')}@{getenv('REDIS_HOST')}:{getenv('REDIS_PORT')}",
     }
 }
+
+CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
+
+CELERY_BROKER_URL = CACHES["default"]["LOCATION"]
+
+#: Only add pickle to this list if your broker is secured
+#: from unwanted access (see userguide/security.html)
+CELERY_ACCEPT_CONTENT = ["application/json"]
+CELERY_RESULT_SERIALIZER = "json"
+CELERY_TASK_SERIALIZER = "json"
+CELERY_RESULT_BACKEND = "django-db"
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -196,7 +189,7 @@ STATIC_URL = "/static/"
 DJANGO_VITE_ASSETS_PATH = getenv("STATIC_DIST_DIR")
 
 # If use HMR or not.
-DJANGO_VITE_DEV_MODE = MODE == Modes.DEV
+DJANGO_VITE_DEV_MODE = MODE == "development"
 
 # Name of static files folder (after called python manage.py collectstatic)
 STATIC_ROOT = BASE_DIR / "collectstatic"
