@@ -14,7 +14,6 @@ import os
 from enum import Enum
 from pathlib import Path
 
-
 class Modes(Enum):
     DEV = "development"
     # Lint & typecheck
@@ -24,7 +23,6 @@ class Modes(Enum):
     # Dev server
 
     TEST = "test"
-    # Lint & typecheck
     # Vite build
     # UnoCSS build
     # Serve staticfiles w/ whitenoise
@@ -35,6 +33,7 @@ class Modes(Enum):
     # UnoCSS build
     # Gunicorn
 
+getenv = os.environ.get
 
 try:
     import django_stubs_ext
@@ -45,11 +44,11 @@ except:
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-MODE = Modes(os.environ["MODE"])
+MODE = Modes(getenv("MODE", "test"))
 
 DEBUG = MODE == Modes.DEV
 
-SECRET_KEY = os.environ["DJANGO_SECRET_KEY"]
+SECRET_KEY = getenv("DJANGO_SECRET_KEY")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -130,11 +129,11 @@ WSGI_APPLICATION = "mysite.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": os.environ["POSTGRES_DB"],
-        "USER": os.environ["POSTGRES_USER"],
-        "PASSWORD": os.environ["POSTGRES_PASSWORD"],
-        "HOST": os.environ["POSTGRES_HOST"],
-        "POST": os.environ["POSTGRES_PORT"],
+        "NAME": getenv("POSTGRES_DB"),
+        "USER": getenv("POSTGRES_USER"),
+        "PASSWORD": getenv("POSTGRES_PASSWORD"),
+        "HOST": getenv("POSTGRES_HOST"),
+        "POST": getenv("POSTGRES_PORT"),
         # 'OPTIONS': {'sslmode': 'require'},
     }
 }
@@ -142,7 +141,7 @@ DATABASES = {
 CACHES = {
     "default": {
         "BACKEND": "django.core.cache.backends.redis.RedisCache",
-        "LOCATION": "{REDIS_PROTOCOL}://{REDIS_USER}:{REDIS_PASSWORD}@{REDIS_HOST}:{REDIS_PORT}".format(**os.environ),
+        "LOCATION": f"{getenv('REDIS_PROTOCOL')}://{getenv('REDIS_USER')}:{getenv('REDIS_PASSWORD')}@{getenv('REDIS_HOST')}:{getenv('REDIS_PORT')}",
     }
 }
 
@@ -194,7 +193,7 @@ STATICFILES_STORAGE = "django.contrib.staticfiles.storage.ManifestStaticFilesSto
 STATIC_URL = "/static/"
 
 # Where ViteJS assets are built.
-DJANGO_VITE_ASSETS_PATH = os.environ["STATIC_DIST_DIR"]
+DJANGO_VITE_ASSETS_PATH = getenv("STATIC_DIST_DIR")
 
 # If use HMR or not.
 DJANGO_VITE_DEV_MODE = MODE == Modes.DEV
