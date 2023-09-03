@@ -79,16 +79,16 @@ COPY . .
 
 EXPOSE 8000
 
+COPY --chmod=777 .ci/entrypoint.*.sh .
+
 
 
 FROM prod-runtime as prod
 
-COPY --chmod=777 .ci/prod/entrypoint.sh .
-CMD ["./entrypoint.sh"]
+CMD ["./entrypoint.prod.sh"]
 
 
 
 FROM prod-runtime as test
 
-COPY --chmod=777 .ci/test/entrypoint.sh .
-CMD ["./entrypoint.sh"]
+CMD ["./entrypoint.test.sh"]

@@ -1,7 +1,6 @@
 version: '3.4'
 services:
   django:
-    env_file: ../../.env.prod
     depends_on:
      - redis
      - postgres
@@ -9,8 +8,9 @@ services:
       context: ../..
       dockerfile: ./.ci/Dockerfile
       target: prod
+    env_file: ../../.env.prod
     ports:
-      - 8000:8000
+      - "8000:8000"
 
   postgres:
     image: postgres:15-bookworm

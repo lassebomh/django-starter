@@ -28,7 +28,8 @@
 # **/.venv
 # /static/
 
-/media/
+media
+collectstatic
 
 LICENSE
 README.md

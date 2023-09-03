@@ -36,7 +36,7 @@
 
         {% unicorn_scripts %}
 
-        {% if debug %}
+        {% if settings.DJANGO_VITE_DEV_MODE %}
             <style>[un-cloak] {display: none;}</style>
             {% vite_hmr_client %}
             {% vite_asset 'uno-runtime.js' %}
