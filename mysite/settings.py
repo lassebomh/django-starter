@@ -28,7 +28,7 @@ MODE = getenv("MODE")
 
 DEBUG = MODE != "production"
 
-SECRET_KEY = getenv("DJANGO_SECRET_KEY")
+SECRET_KEY = getenv("DJANGO_SECRET_KEY", 'django-insecure-1234567890')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -79,7 +79,7 @@ MIDDLEWARE = [
     "wagtail.contrib.redirects.middleware.RedirectMiddleware",
 ]
 
-if MODE == "test":
+if MODE == "staging":
     MIDDLEWARE += ["whitenoise.middleware.WhiteNoiseMiddleware"]
 
 ROOT_URLCONF = "mysite.urls"

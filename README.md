@@ -24,7 +24,11 @@
  - Auto reload
  - Test locally or with Github Actions for approval tests
 
-## TODO
+## 
 
-Set debug til true i test
-Fiks unocss runtime skal slås fra i testing mode
+dev
+
+staging run
+staging test
+
+prod

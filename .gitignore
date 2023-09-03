@@ -10,6 +10,6 @@ venv/
 *.csv
 *.prof
 *.env*
-!.env.example
+!.env.staging
 static/dist
 collectstatic

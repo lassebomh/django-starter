@@ -7,14 +7,14 @@ services:
     build:
       context: ../..
       dockerfile: ./.ci/Dockerfile
-      target: test
-    env_file: ../../.env.example
+      target: prod
+    env_file: ../../.env.staging
     ports:
       - "8000:8000"
 
   postgres:
     image: postgres:15-bookworm
-    env_file: ../../.env.example
+    env_file: ../../.env.staging
     expose:
       - "5432:5432"
 
