@@ -1,3 +1,6 @@
+import Alpine from 'alpinejs';
 import './style.css';
-
-console.log('Hello from VITE!');
+ 
+window.Alpine = Alpine
+ 
+Alpine.start()

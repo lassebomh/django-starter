@@ -19,8 +19,11 @@
 				"ruff.importStrategy": "fromEnvironment",
 				"python.terminal.activateEnvironment": false,
 				"python.defaultInterpreterPath": "/opt/pysetup/.venv/bin/python",
-				"editor.defaultFormatter": "ms-python.black-formatter",
-				"editor.formatOnSave": true,
+				"[python]": {
+					"editor.defaultFormatter": "ms-python.black-formatter",
+					"diffEditor.ignoreTrimWhitespace": false,
+					"editor.formatOnType": true
+				},
 				"editor.codeActionsOnSave": {
 					"source.organizeImports": true
 				}

@@ -1,14 +1,30 @@
 
-# Test
+# Django Starter
 
-```bash
-docker compose -f .ci/test/docker-compose.yml up --build && docker compose -f .ci/test/docker-compose.yml down -v
-```
+## Features
 
-# Production
+### Stack
+ - Multi-stage Docker image (small bundle size and good caching)
+ - Redis + PostgreSQL
+ - Dependency management with Poetry
+ - Task scheduler with Celery
+ - User-friendly CMS with Wagtail
+ - Dynamic UI components with Django Unicorn
+ - AlpineJS for extra client-side interactivity
+ - Tailwind styling
+ - Minify JS/CSS bundles with Vite
 
+### Development features
+ - Nothing more than Docker and VSCode is needed to develop
+ - Comes with preconfigured VSCode extensions
+ - Type-checking, linting and autoformatter (Mypy, Ruff, Black)
+ - Automatic import sorting and format on save
+ - Develop inside the container
+ - Run with debugger
+ - Auto reload
+ - Test locally or with Github Actions for approval tests
 
-```bash
-docker compose -f .ci/prod/docker-compose.yml up --build
-```
+## TODO
 
+Set debug til true i test
+Fiks unocss runtime skal slås fra i testing mode

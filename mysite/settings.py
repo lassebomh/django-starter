@@ -26,7 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 MODE = getenv("MODE")
 
-DEBUG = MODE == "development"
+DEBUG = MODE != "production"
 
 SECRET_KEY = getenv("DJANGO_SECRET_KEY")
 

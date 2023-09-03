@@ -6,6 +6,7 @@
   },
   "dependencies": {
     "@unocss/preset-wind": "^0.55.1",
+    "alpinejs": "^3.13.0",
     "unocss": "^0.55.1",
     "vite": "^4.4.9"
   },

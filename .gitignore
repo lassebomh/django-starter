@@ -12,3 +12,4 @@ venv/
 *.env*
 !.env.example
 static/dist
+collectstatic
