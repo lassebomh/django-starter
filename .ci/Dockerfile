@@ -67,7 +67,7 @@ WORKDIR /
 
 
 
-FROM base as prod
+FROM base as prod-runtime
 
 COPY --from=prod-builder $POETRY_HOME $POETRY_HOME
 COPY --from=prod-builder $PYSETUP_PATH $PYSETUP_PATH
@@ -77,10 +77,20 @@ WORKDIR /app
 
 COPY . .
 
-RUN python manage.py collectstatic --no-input
+COPY --chmod=777 .ci/entrypoint*.sh .
+
+
+
+FROM prod-runtime as prod
 
 EXPOSE 8000
 
-COPY --chmod=777 .ci/entrypoint.*.sh .
+RUN python manage.py collectstatic --no-input
 
 CMD ["./entrypoint.prod.sh"]
+
+
+
+FROM prod-runtime as worker
+
+CMD ["./entrypoint.worker.sh"]

@@ -2,6 +2,10 @@
 
 cd .ci/staging
 
+echo "::group::Stopping services"
+docker compose down -v
+echo "::endgroup::"
+
 echo "::group::Pulling images"
 docker compose pull
 echo "::endgroup::"

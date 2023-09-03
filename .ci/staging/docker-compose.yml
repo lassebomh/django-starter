@@ -2,8 +2,7 @@ version: '3.4'
 services:
   django:
     depends_on:
-     - redis
-     - postgres
+     - worker
     build:
       context: ../..
       dockerfile: ./.ci/Dockerfile
@@ -11,6 +10,16 @@ services:
     env_file: ../../.env.staging
     ports:
       - "8000:8000"
+
+  worker:
+    depends_on:
+     - redis
+     - postgres
+    build:
+      context: ../..
+      dockerfile: ./.ci/Dockerfile
+      target: worker
+    env_file: ../../.env.staging
 
   postgres:
     image: postgres:15-bookworm
