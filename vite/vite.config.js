@@ -6,7 +6,7 @@ export default defineConfig(({ command, mode, ssrBuild }) => {
   return {
     plugins: [
       UnoCSS(),
-      FullReload(['../**/*.html', './src/**/*'], { delay: 0 })
+      FullReload(['../**/*.html', '../*/components/**/*.py', './src/**/*'], { delay: 0 })
     ],
     root: '/app/' + process.env.STATIC_SRC_DIR + "/src",
     base: '/static/',
@@ -20,6 +20,7 @@ export default defineConfig(({ command, mode, ssrBuild }) => {
       },
       watch: {
         disableGlobbing: false,
+        usePolling: true,
       },
     },
     build: {

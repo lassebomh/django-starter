@@ -130,16 +130,13 @@ CACHES = {
 }
 
 CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
-
 CELERY_BROKER_URL = CACHES["default"]["LOCATION"]
 
-#: Only add pickle to this list if your broker is secured
-#: from unwanted access (see userguide/security.html)
 CELERY_ACCEPT_CONTENT = ["application/json"]
 CELERY_RESULT_SERIALIZER = "json"
 CELERY_TASK_SERIALIZER = "json"
+CELERY_TASK_TRACK_STARTED = True
 CELERY_RESULT_BACKEND = "django-db"
-
 CELERY_RESULT_EXTENDED = DEBUG
 
 # Password validation
@@ -159,6 +156,28 @@ AUTH_PASSWORD_VALIDATORS = [
         "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
+
+LOGGING = {
+    # Definition of filters
+    'filters': {    
+        'hide_staticfiles': {    
+            '()': 'mysite.logger.SkipStaticFilter'    
+        }
+    },
+    'version': 1,    
+    'disable_existing_loggers': False,    
+    'handlers': {    
+        'console': {    
+            'class': 'logging.StreamHandler',
+            'filters': ['hide_staticfiles']    
+        },    
+    },    
+    'loggers': {    
+        'django': {
+            'handlers': ['console'],   
+        }    
+    },
+}   
 
 
 # Internationalization

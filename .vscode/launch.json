@@ -5,7 +5,19 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Debug Django",
+            "command": "npm run dev",
+            "name": "Vite",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/vite",
+            "type": "node-terminal",
+            "presentation": {
+                "hidden": false,
+                "group": "Individual",
+                "order": 2
+            },
+        },
+        {
+            "name": "Django",
             "type": "python",
             "python": "/opt/pysetup/.venv/bin/python",
             "request": "launch",
@@ -14,16 +26,49 @@
                 "runserver"
             ],
             "django": true,
-            "justMyCode": true
+            "justMyCode": true,
+            "presentation": {
+                "hidden": false,
+                "group": "Individual",
+                "order": 2
+            },
+            // "serverReadyAction": {
+            //     "action": "debugWithChrom",
+            //     "pattern": "Starting development server at http://0.0.0.0:([0-9]+)/",
+            //     "uriFormat": "http://localhost:%s",
+            //     "webRoot": "${workspaceFolder}",
+            //     "killOnServerStop": true
+            // }
         },
         {
-            "name": "Debug Worker",
+            "name": "Celery",
             "type": "python",
             "python": "/opt/pysetup/.venv/bin/python",
             "request": "launch",
             "module": "celery",
             "args": ["-A", "mysite.celery", "worker", "-l", "info"],
-            "justMyCode": true
+            "justMyCode": true,
+            "presentation": {
+                "hidden": false,
+                "group": "Individual",
+                "order": 2
+            },
         },
+    ],
+    "compounds": [
+        {
+            "name": "Debug all",
+            "configurations": [
+                "Django",
+                "Celery",
+                "Vite",
+            ],
+            "presentation": {
+                "hidden": false,
+                "group": "Compound",
+                "order": 1
+            },
+            "stopAll": true
+        }
     ]
 }
