@@ -4,6 +4,8 @@
 {% block body %}
     {% csrf_token %}
 
+    <h1>The result is {{ result }}</h1>
+
     {% unicorn 'mycomponent' %}
     
     {% unicorn 'formcomponent' %}

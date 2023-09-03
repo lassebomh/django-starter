@@ -77,7 +77,7 @@ WORKDIR /app
 
 COPY . .
 
-RUN python manage.py collectstatic
+RUN python manage.py collectstatic --no-input
 
 EXPOSE 8000
 

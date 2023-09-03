@@ -23,6 +23,7 @@ django-celery-beat = "^2.5.0"
 mypy = "^1.5.1"
 black = "^23.7.0"
 ruff = "^0.0.286"
+celery-types = "^0.19.0"
 django-stubs = "^4.2.3"
 django-stubs-ext = "^4.2.2"
 

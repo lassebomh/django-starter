@@ -1,47 +1,41 @@
 import UnoCSS from 'unocss/vite';
+import { defineConfig } from 'vite';
 import FullReload from 'vite-plugin-full-reload';
 
-const MODE = process.env.MODE
-
-var plugins = []
-var input = {
-  main: 'src/main.js',
-}
-
-if (MODE == 'development'){
-  plugins.push(FullReload(['../**/*.html', './src/**/*'], { delay: 0 }))
-  input['unoruntime'] = 'src/uno-runtime.js'
-} else {
-  plugins.push(UnoCSS())
-  input['unobuild'] = 'src/uno-build.js'
-}
-
-export default {
-  plugins: plugins,
-  root: '/app/' + process.env.STATIC_SRC_DIR + "/src",
-  base: '/static/',
-  server: {
-    host: true,
-    port: 3000,
-    open: false,
-    hmr: {
-      host: 'localhost',
+export default defineConfig(({ command, mode, ssrBuild }) => {
+  return {
+    plugins: [
+      UnoCSS(),
+      FullReload(['../**/*.html', './src/**/*'], { delay: 0 })
+    ],
+    root: '/app/' + process.env.STATIC_SRC_DIR + "/src",
+    base: '/static/',
+    server: {
+      host: true,
       port: 3000,
-    },
-    watch: {
-      disableGlobbing: false,
-    },
-  },
-  build: {
-    outDir: process.env.STATIC_DIST_DIR,
-    assetsDir: '',
-    manifest: true,
-    emptyOutDir: true,
-    rollupOptions: {
-      input: input,
-      output: {
-        chunkFileNames: undefined,
+      open: false,
+      hmr: {
+        host: 'localhost',
+        port: 3000,
+      },
+      watch: {
+        disableGlobbing: false,
       },
     },
-  },
-};
+    build: {
+      outDir: process.env.STATIC_DIST_DIR,
+      assetsDir: '',
+      manifest: true,
+      emptyOutDir: true,
+      rollupOptions: {
+        input: {
+          'main': 'src/main.js',
+          'uno': `src/uno-${command}.js`,
+        },
+        output: {
+          chunkFileNames: undefined,
+        },
+      },
+    },
+  }
+})

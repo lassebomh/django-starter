@@ -1,4 +1,3 @@
-from datetime import datetime
 from typing import Any
 
 from django.contrib.auth import views as auth_views
@@ -7,13 +6,7 @@ from django.shortcuts import render
 
 
 def root(request: HttpRequest) -> HttpResponse:
-    context = {}
-
-    now = datetime.now()
-    formatted_now = now.strftime("%A, %d %B, %Y at %X")
-    context["formatted_now"] = formatted_now
-
-    return render(request, "pages/root.html", context)
+    return render(request, "pages/root.html")
 
 
 class LoginView(auth_views.LoginView):

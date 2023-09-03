@@ -15,20 +15,21 @@ from pathlib import Path
 
 getenv = os.environ.get
 
-try:
-    import django_stubs_ext
-
-    django_stubs_ext.monkeypatch()
-except:
-    ...
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 MODE = getenv("MODE")
 
+if MODE == "development":
+    import django_stubs_ext
+    from celery.app.task import Task
+
+    django_stubs_ext.monkeypatch()
+    Task.__class_getitem__ = classmethod(lambda cls, *args, **kwargs: cls)  # type: ignore[attr-defined]
+
 DEBUG = MODE != "production"
 
-SECRET_KEY = getenv("DJANGO_SECRET_KEY", 'django-insecure-1234567890')
+SECRET_KEY = getenv("DJANGO_SECRET_KEY", "django-insecure-1234567890")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -138,6 +139,8 @@ CELERY_ACCEPT_CONTENT = ["application/json"]
 CELERY_RESULT_SERIALIZER = "json"
 CELERY_TASK_SERIALIZER = "json"
 CELERY_RESULT_BACKEND = "django-db"
+
+CELERY_RESULT_EXTENDED = DEBUG
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators

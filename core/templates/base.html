@@ -35,11 +35,11 @@
         {% vite_asset 'main.js' %}
 
         {% unicorn_scripts %}
-
+        
         {% if settings.DJANGO_VITE_DEV_MODE %}
             <style>[un-cloak] {display: none;}</style>
             {% vite_hmr_client %}
-            {% vite_asset 'uno-runtime.js' %}
+            {% vite_asset 'uno-serve.js' %}
         {% else %}
             {% vite_asset 'uno-build.js' %}
         {% endif %}
@@ -76,6 +76,7 @@
                 </button>
             </div>
         </div> {% endcomment %}
+        
         {% block body %}
         {% endblock %}
     </body>

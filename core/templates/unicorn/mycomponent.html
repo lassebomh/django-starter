@@ -1,8 +1,12 @@
 <div>
-    <label class="label" for="name" >Your name</label>
-    <input unicorn:model="name" class="entry" type="text" id="text" />
-    <br />
-    
-    Hello {{ name|title }}
+    <div id="results">
+        {% for task in tasks %}
+            <p>
+                {{ task.status }}
+                {{ task.result }}
+            </p>
+        {% endfor %}
+    </div>
+    <button unicorn:click="add()" unicorn:partial="results">Add new number</button>
 </div>
 
