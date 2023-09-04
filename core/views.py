@@ -16,13 +16,13 @@ class TestForm(forms.Form):
     date_input = forms.DateField(initial="2000-01-01")
     datetime_local_input = forms.DateTimeField()
     time_input = forms.TimeField(widget=forms.TimeInput)
-    checkbox_input = forms.BooleanField(widget=forms.CheckboxInput, required=True)
+    checkbox_input = forms.BooleanField(widget=forms.CheckboxInput, required=True, help_text="Hellooooo help")
     select = forms.ChoiceField(choices=[("1", "First"), ("2", "Second")], widget=forms.Select)
     null_boolean_select = forms.NullBooleanField(widget=forms.NullBooleanSelect)
     select_multiple = forms.MultipleChoiceField(choices=[("1", "First"), ("2", "Second")], widget=forms.SelectMultiple)
     radio_select = forms.ChoiceField(choices=[("1", "First"), ("2", "Second")], widget=forms.RadioSelect)
     checkbox_select_multiple = forms.MultipleChoiceField(
-        choices=[("1", "First"), ("2", "Second")], widget=forms.CheckboxSelectMultiple, initial="3"
+        choices=[("1", "First"), ("2", "Second")], widget=forms.CheckboxSelectMultiple, help_text="Hellooooo help"
     )
     file_input = forms.FileField(widget=forms.FileInput)
     clearable_file_input = forms.FileField(widget=forms.ClearableFileInput)
@@ -31,9 +31,7 @@ class TestForm(forms.Form):
 
 
 def root(request: HttpRequest) -> HttpResponse:
-    context = {"form": TestForm({})}
-
-    context["form"].is_valid()
+    context = {"form": TestForm()}
 
     return render(request, "pages/root.html", context)
 

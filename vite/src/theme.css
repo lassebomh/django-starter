@@ -10,3 +10,8 @@ select:not([size]):not([multiple]) {
     -webkit-appearance: none;
     print-color-adjust: exact
 }
+
+label:has(+ .checkbox) {
+    position: absolute;
+    padding-left: 1.75em;
+}
