@@ -5,7 +5,17 @@
 {% block center %}
     {% csrf_token %}
     
+    <form>
+        {{ form.as_div }}
+    </form>
+
+    <div class="[div]:bg-red-500">YOOOOOOO</div>
+    
     <div class="mt-8">
         {% unicorn 'mycomponent' %}
+    </div>
+
+    <div class="mt-8">
+        {% unicorn 'formcomponent' %}
     </div>
 {% endblock %}

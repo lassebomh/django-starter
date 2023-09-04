@@ -26,7 +26,8 @@
 				},
 				"editor.codeActionsOnSave": {
 					"source.organizeImports": true
-				}
+				},
+				"emmet.includeLanguages": {"django-html": "html"}
 			},
 			"extensions": [
 				"ms-python.python",

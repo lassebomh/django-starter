@@ -12,6 +12,7 @@
   },
   "devDependencies": {
     "@unocss/runtime": "^0.55.4",
+    "@unocss/transformer-variant-group": "^0.55.7",
     "vite-plugin-full-reload": "^1.0.5"
   }
 }

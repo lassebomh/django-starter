@@ -17,6 +17,20 @@
             },
         },
         {
+            "name": "Celery",
+            "type": "python",
+            "python": "/opt/pysetup/.venv/bin/python",
+            "request": "launch",
+            "module": "celery",
+            "args": ["-A", "mysite.celery", "worker", "-l", "info"],
+            "justMyCode": true,
+            "presentation": {
+                "hidden": false,
+                "group": "Individual",
+                "order": 2
+            },
+        },
+        {
             "name": "Django",
             "type": "python",
             "python": "/opt/pysetup/.venv/bin/python",
@@ -39,20 +53,6 @@
             //     "webRoot": "${workspaceFolder}",
             //     "killOnServerStop": true
             // }
-        },
-        {
-            "name": "Celery",
-            "type": "python",
-            "python": "/opt/pysetup/.venv/bin/python",
-            "request": "launch",
-            "module": "celery",
-            "args": ["-A", "mysite.celery", "worker", "-l", "info"],
-            "justMyCode": true,
-            "presentation": {
-                "hidden": false,
-                "group": "Individual",
-                "order": 2
-            },
         },
     ],
     "compounds": [

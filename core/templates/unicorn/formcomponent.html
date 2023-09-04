@@ -1,5 +1,27 @@
-<div>
-    <input class="entry" unicorn:model="title" type="text" id="title" /><br />
-    <input unicorn:model="publish_date" type="text" id="publish-date" /><br />
-    <button class="button" unicorn:click="$validate">Validate</button>
+{% load unicorn %}
+{% load core %}
+
+<div class="bg-white shadow-md sm:rounded-lg p-4 mb-8">
+    
+    {% field type="text" label="Title" model="title" %}
+    <div class="mb-6">
+        {% if label %}
+            <label for="{{ name }}" class="label">
+                {{ label }}
+            </label>
+        {% endif %}
+        
+        <input class="input" {% if unicorn.component %}u:model="{{ name }}"{% endif %} type="{{ type }}" id="{{ name }}" />
+        
+        {% if errors %}
+            {% for error in errors %}
+                <div class="mt-2 text-sm text-red-600 dark:text-red-500">
+                    {{ error.message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+    {% field type="datetime-local" label="Publish Date" model="publish_date" %}
+
+
 </div>

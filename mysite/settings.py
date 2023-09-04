@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 import os
 from pathlib import Path
 
+from core.monkeypatch import monkeypatch
+
 getenv = os.environ.get
 
 
@@ -21,11 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 MODE = getenv("MODE")
 
 if MODE == "development":
-    import django_stubs_ext
-    from celery.app.task import Task
-
-    django_stubs_ext.monkeypatch()
-    Task.__class_getitem__ = classmethod(lambda cls, *args, **kwargs: cls)  # type: ignore[attr-defined]
+    monkeypatch()
 
 DEBUG = MODE != "production"
 
@@ -61,6 +59,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # First party
     "core",
+    "core.templatetags",
     "search",
     # Third party
     "django_vite",
@@ -103,6 +102,8 @@ TEMPLATES = [
         },
     },
 ]
+
+FORM_RENDERER = "django.forms.renderers.TemplatesSetting"
 
 WSGI_APPLICATION = "mysite.wsgi.application"
 
@@ -159,25 +160,18 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LOGGING = {
     # Definition of filters
-    'filters': {    
-        'hide_staticfiles': {    
-            '()': 'mysite.logger.SkipStaticFilter'    
+    "filters": {"hide_staticfiles": {"()": "mysite.logger.SkipStaticFilter"}},
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "console": {"class": "logging.StreamHandler", "filters": ["hide_staticfiles"]},
+    },
+    "loggers": {
+        "django": {
+            "handlers": ["console"],
         }
     },
-    'version': 1,    
-    'disable_existing_loggers': False,    
-    'handlers': {    
-        'console': {    
-            'class': 'logging.StreamHandler',
-            'filters': ['hide_staticfiles']    
-        },    
-    },    
-    'loggers': {    
-        'django': {
-            'handlers': ['console'],   
-        }    
-    },
-}   
+}
 
 
 # Internationalization
