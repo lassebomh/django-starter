@@ -1,0 +1,19 @@
+<div class="mb-4{% if errors %} has-errors{% endif %}">
+    {% if label %}
+        <label class="label" for="{{ name }}">{{ label }}</label>
+    {% endif %}
+
+    <input name="{{ name }}" type="{{ type }}" class="{{ type }}" {% for k,v in attrs %}{{k}}{% if v %}="{{v}}"{% endif %} {% endfor %}/>
+
+    {% if help_text %}
+        <div class="helptext">{{ help_text }}</div>
+    {% endif %}
+
+    {% if errors %}
+        <ul class="errorlist">
+            {% for error in errors %}
+                <li>{{ error }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</div>

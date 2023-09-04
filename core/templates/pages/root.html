@@ -5,13 +5,15 @@
 {% block center %}
     {% csrf_token %}
     
-    <form>
-        {{ form.as_div }}
-    </form>
+    {% comment %} <form>
+        <table>
+            {{ form.as_table }}
+        </table>
+    </form> {% endcomment %}
 
-    <div class="mt-8">
+    {% comment %} <div class="mt-8">
         {% unicorn 'mycomponent' %}
-    </div>
+    </div> {% endcomment %}
 
     <div class="mt-8">
         {% unicorn 'formcomponent' %}

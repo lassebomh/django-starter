@@ -9,7 +9,7 @@ export default defineConfig({
     shortcuts: [
         {
             'label': 'block mb-2 text-sm font-medium text-gray-900 error:text-red-700',
-            'input': 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 focus:(outline-blue-500 border-blue-500) error:(bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:outline-red-500 focus:border-red-500)',
+            'input': 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 focus:(outline-neutral-700 border-neutral-700) error:(bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:outline-red-500 focus:border-red-500)',
             // form inputs
             'text': 'input',
             'textarea': "input",
@@ -26,8 +26,8 @@ export default defineConfig({
             'splitdatetime': 'input w-auto inline',
             'file': 'block p-2 w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none',
             'clearable_file_input': 'file',
-            'checkbox': 'w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:outline-3 focus:outline-blue-300',
-            'radio_option': 'w-4 h-4 border-gray-300 focus:(outline-2 outline-blue-300)',
+            'checkbox': 'w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:outline-3 focus:outline-neutral-500',
+            'radio_option': 'w-4 h-4 border-gray-300 focus:(outline-2 outline-neutral-500)',
             'radio': 'flex flex-col gap-1 children:children:(text-sm flex items-center gap-1.5 children:checkbox)',
             'checkbox_select': 'flex flex-col gap-1 children:children:(text-sm flex items-center gap-1.5 children:checkbox)',
             // form extra
