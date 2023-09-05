@@ -1,9 +1,12 @@
+{% load core %}
+
 <div u:poll-500="update_tasks">
     <div class="bg-white shadow-md sm:rounded-lg p-4 mb-8">
         <div class="flex items-center gap-6 mb-8">
-            <input u:model="a" type="text" placeholder='First number' class="input w-60">
+            {% input type="text" u_model="a" placeholder="First number" label="" %}
             <div>+</div>
-            <input u:model="b" type="text" placeholder='Second number' class="input w-60">
+            {% input type="text" u_model="b" placeholder="Second number" label="" %}
+
             <button u:click="new_task()" class="text-white bg-black hover:bg-black-800 focus:ring-4 focus:outline-none focus:ring-black-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">
                 Submit
             </button>

@@ -1,3 +1,4 @@
+import re
 from typing import Any
 
 from django import template
@@ -21,7 +22,7 @@ def input(context: Context, *args: str, **kwargs: str) -> Context:
 
     for k, v in kwargs.items():
         if k.startswith("u_"):
-            k = "unicorn:" + k[2:].replace("_", ".")
+            k = "unicorn:" + re.sub(r"([a-z]+)([0-9]+)", r"\1-\2", k[2:].replace("_", "."))
 
         if k.startswith("unicorn:model"):
             model = v
@@ -37,7 +38,7 @@ def input(context: Context, *args: str, **kwargs: str) -> Context:
         if unicorn:
             errors = [e["message"] for e in unicorn["errors"].get(model, [])]
 
-    if not label and name:
+    if label is None and name:
         label = name.replace("_", " ").title()
 
     return Context(
