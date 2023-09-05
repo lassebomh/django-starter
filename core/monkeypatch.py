@@ -1,11 +1,12 @@
-def monkeypatch() -> None:
+def monkeypatch(mode: str | None) -> None:
     from typing import Any
 
-    import django_stubs_ext
-    from celery.app.task import Task
+    if mode == "development":
+        import django_stubs_ext
+        from celery.app.task import Task
 
-    django_stubs_ext.monkeypatch()
-    Task.__class_getitem__ = classmethod(lambda cls, *args, **kwargs: cls)  # type: ignore[attr-defined]
+        django_stubs_ext.monkeypatch()
+        Task.__class_getitem__ = classmethod(lambda cls, *args, **kwargs: cls)  # type: ignore[attr-defined]
 
     from django.forms.widgets import Widget
 
@@ -30,11 +31,11 @@ def monkeypatch() -> None:
     from django.forms import BaseForm, DateInput, DateTimeInput, Form, TimeInput
 
     DateInput.css_class = "date"  # type: ignore[attr-defined]
-    DateInput.input_type = "date"  # type: ignore[attr-defined]
+    DateInput.input_type = "date"
     TimeInput.css_class = "time"  # type: ignore[attr-defined]
-    TimeInput.input_type = "time"  # type: ignore[attr-defined]
+    TimeInput.input_type = "time"
     DateTimeInput.css_class = "datetime-local"  # type: ignore[attr-defined]
-    DateTimeInput.input_type = "datetime-local"  # type: ignore[attr-defined]
+    DateTimeInput.input_type = "datetime-local"
 
     def remove_form_label_suffix(init_func: Any) -> Any:
         def dec(self: BaseForm, *args: Any, **kwargs: Any) -> Any:

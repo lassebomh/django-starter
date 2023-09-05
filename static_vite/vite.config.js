@@ -1,12 +1,10 @@
 import UnoCSS from 'unocss/vite';
 import { defineConfig } from 'vite';
-import FullReload from 'vite-plugin-full-reload';
 
 export default defineConfig(({ command, mode, ssrBuild }) => {
   return {
     plugins: [
       UnoCSS(),
-      FullReload(['../**/*.html', '../*/components/**/*.py', './src/**/*'], { delay: 0 })
     ],
     root: 'src',
     base: '/static/',
@@ -18,23 +16,15 @@ export default defineConfig(({ command, mode, ssrBuild }) => {
         host: 'localhost',
         port: 3000,
       },
-      watch: {
-        disableGlobbing: false,
-        usePolling: true,
-      },
     },
     build: {
-      outDir: process.env.STATIC_DIST_DIR,
+      outDir: '../static/dist',
       assetsDir: '',
       manifest: true,
       emptyOutDir: true,
       rollupOptions: {
         input: {
           'main': 'src/main.js',
-          'uno': `src/uno-${command}.js`,
-        },
-        output: {
-          chunkFileNames: undefined,
         },
       },
     },

@@ -5,14 +5,10 @@
     "build": "vite build"
   },
   "dependencies": {
+    "vite": "^4.4.9",
     "@unocss/preset-wind": "^0.55.1",
-    "alpinejs": "^3.13.0",
-    "unocss": "^0.55.1",
-    "vite": "^4.4.9"
-  },
-  "devDependencies": {
-    "@unocss/runtime": "^0.55.4",
     "@unocss/transformer-variant-group": "^0.55.7",
-    "vite-plugin-full-reload": "^1.0.5"
+    "unocss": "^0.55.1",
+    "alpinejs": "^3.13.0"
   }
 }

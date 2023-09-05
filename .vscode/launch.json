@@ -10,16 +10,25 @@
             "request": "launch",
             "cwd": "${workspaceFolder}/static_vite",
             "type": "node-terminal",
+            "envFile": "${workspaceFolder}/.env.dev",
             "presentation": {
                 "hidden": false,
                 "group": "Individual",
                 "order": 2
             },
+            "internalConsoleOptions": "neverOpen",
         },
         {
             "name": "Celery",
             "type": "python",
-            "python": "/opt/pysetup/.venv/bin/python",
+            "autoReload": {
+                "enable": true,
+                "include": [
+                    "**/*.py",
+                    "**/*.pyw"
+                ]
+            },
+            "envFile": "${workspaceFolder}/.env.dev",
             "request": "launch",
             "module": "celery",
             "args": ["-A", "mysite.celery", "worker", "-l", "info"],
@@ -29,11 +38,12 @@
                 "group": "Individual",
                 "order": 2
             },
+            "internalConsoleOptions": "neverOpen",
         },
         {
             "name": "Django",
             "type": "python",
-            "python": "/opt/pysetup/.venv/bin/python",
+            "envFile": "${workspaceFolder}/.env.dev",
             "request": "launch",
             "program": "${workspaceFolder}/manage.py",
             "args": [
@@ -46,13 +56,6 @@
                 "group": "Individual",
                 "order": 2
             },
-            // "serverReadyAction": {
-            //     "action": "debugWithChrom",
-            //     "pattern": "Starting development server at http://0.0.0.0:([0-9]+)/",
-            //     "uriFormat": "http://localhost:%s",
-            //     "webRoot": "${workspaceFolder}",
-            //     "killOnServerStop": true
-            // }
         },
     ],
     "compounds": [
@@ -68,7 +71,7 @@
                 "group": "Compound",
                 "order": 1
             },
-            "stopAll": true
+            "stopAll": true,
         }
     ]
 }

@@ -27,6 +27,7 @@ celery-types = "^0.19.0"
 django-stubs = "^4.2.3"
 django-stubs-ext = "^4.2.2"
 django-debug-toolbar = "^4.2.0"
+django-browser-reload = "^1.11.0"
 
 [tool.mypy]
 cache_dir = "/opt/mypy_cache"

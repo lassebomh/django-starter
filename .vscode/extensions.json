@@ -1,5 +1,14 @@
 {
     "recommendations": [
-        "ms-vscode-remote.remote-containers"
-    ]
+        // "ms-vscode-remote.remote-containers",
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "ms-python.black-formatter",
+        "ms-azuretools.vscode-docker",
+        "matangover.mypy",
+        "antfu.unocss",
+        "tamasfe.even-better-toml",
+        "charliermarsh.ruff",
+        "batisteo.vscode-django"
+    ],
 }

@@ -24,8 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 MODE = getenv("MODE")
 
-if MODE == "development":
-    monkeypatch()
+monkeypatch(MODE)
 
 DEBUG = MODE != "production"
 
@@ -69,11 +68,13 @@ INSTALLED_APPS = [
     "django_unicorn",
     "django_celery_results",
     "django_celery_beat",
+    "django_browser_reload",
     "debug_toolbar",
 ]
 
 MIDDLEWARE = [
     "debug_toolbar.middleware.DebugToolbarMiddleware",
+    "django_browser_reload.middleware.BrowserReloadMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -154,7 +155,7 @@ CACHES = {
 CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
 CELERY_BROKER_URL = REDIS_LOCATION
 
-# CELERY_CACHE_BACKEND = "django-cache"
+CELERY_CACHE_BACKEND = "django-cache"
 CELERY_RESULT_BACKEND = "django-db"
 
 CELERY_ACCEPT_CONTENT = ["application/json"]
@@ -164,16 +165,17 @@ CELERY_TASK_SERIALIZER = "json"
 CELERY_TASK_TRACK_STARTED = True
 CELERY_TASK_ALWAYS_EAGER = False
 CELERY_TASK_EAGER_PROPAGATES = True
-CELERY_RESULT_EXTENDED = True
+CELERY_RESULT_EXTENDED = True  # Should probably remove
 
 CELERY_TASK_STORE_EAGER_RESULT = True
 
-if True:
-    DATABASES["default"] = DATABASES.pop("sqlite")
-    CACHES["default"] = CACHES.pop("dummy")
+# if True:
+#     DATABASES["default"] = DATABASES.pop("sqlite")
+#     CACHES["default"] = CACHES.pop("dummy")
 
-    CELERY_BROKER_URL = "memory://"
-    CELERY_TASK_ALWAYS_EAGER = True
+#     CELERY_BROKER_URL = "memory://"
+#     CELERY_TASK_ALWAYS_EAGER = True
+
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -238,7 +240,7 @@ STATICFILES_STORAGE = "django.contrib.staticfiles.storage.ManifestStaticFilesSto
 STATIC_URL = "/static/"
 
 # Where ViteJS assets are built.
-DJANGO_VITE_ASSETS_PATH = getenv("STATIC_DIST_DIR")
+DJANGO_VITE_ASSETS_PATH = BASE_DIR / "static" / "dist"
 
 # If use HMR or not.
 DJANGO_VITE_DEV_MODE = MODE == "development"

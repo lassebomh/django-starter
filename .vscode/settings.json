@@ -1,0 +1,21 @@
+{
+    "mypy.runUsingActiveInterpreter": true,
+    "mypy.configFile": "pyproject.toml",
+    "unocss.underline": false,
+    "unocss.autocomplete.maxItems": 100,
+    "unocss.colorPreview": false,
+    "unocss.root": "${workspaceFolder}/static_vite",
+    "black-formatter.importStrategy": "fromEnvironment",
+    "ruff.importStrategy": "fromEnvironment",
+    "python.terminal.activateEnvironment": false,
+    "explorer.autoReveal": false,
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.black-formatter",
+        "diffEditor.ignoreTrimWhitespace": false,
+        "editor.formatOnType": true,
+    },
+    "editor.codeActionsOnSave": {
+        "source.organizeImports": true
+    },
+    "emmet.includeLanguages": {"django-html": "html"}
+}

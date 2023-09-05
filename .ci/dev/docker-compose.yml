@@ -1,18 +1,18 @@
 version: '3.4'
 services:
-  django:
-    env_file: ../../.env.dev
-    depends_on:
-      - redis
-      - postgres
-    build:
-      context: ../..
-      dockerfile: ./.ci/Dockerfile
-      target: dev
-    command: sleep infinity
-    volumes:
-      - ../..:/app
-      - /app/static_vite/node_modules/
+  # django:
+  #   env_file: ../../.env.dev
+  #   depends_on:
+  #     - redis
+  #     - postgres
+  #   build:
+  #     context: ../..
+  #     dockerfile: ./.ci/Dockerfile
+  #     target: dev
+  #   command: sleep infinity
+  #   volumes:
+  #     - ../..:/app
+  #     - /app/static_vite/node_modules/
 
   postgres:
     env_file: ../../.env.dev

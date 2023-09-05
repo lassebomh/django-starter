@@ -1,4 +1,3 @@
-from django.conf import settings
 from django.contrib import admin
 from django.urls import include, path
 from wagtail import urls as wagtail_urls
@@ -6,6 +5,7 @@ from wagtail.admin import urls as wagtailadmin_urls
 from wagtail.documents import urls as wagtaildocs_urls
 
 from core import urls as core_urls
+from mysite import settings
 from public_site import urls as public_site_urls
 from search import views as search_views
 
@@ -17,6 +17,7 @@ urlpatterns = [
     # Third-party
     path("unicorn/", include("django_unicorn.urls")),
     path("__debug__/", include("debug_toolbar.urls")),
+    path("__reload__/", include("django_browser_reload.urls")),
     # Builtin
     path("django-admin/", admin.site.urls),
     path("admin/", include(wagtailadmin_urls)),
@@ -24,7 +25,7 @@ urlpatterns = [
 ]
 
 
-if settings.DEBUG:
+if settings.MODE == "development":
     from django.conf.urls.static import static
     from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
