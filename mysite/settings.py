@@ -131,25 +131,49 @@ DATABASES = {
         "HOST": getenv("POSTGRES_HOST"),
         "POST": getenv("POSTGRES_PORT"),
         # 'OPTIONS': {'sslmode': 'require'},
-    }
+    },
+    "sqlite": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": "dev.sqlite3",
+    },
 }
+
+REDIS_LOCATION = f"{getenv('REDIS_PROTOCOL')}://{getenv('REDIS_USER')}:{getenv('REDIS_PASSWORD')}@{getenv('REDIS_HOST')}:{getenv('REDIS_PORT')}"
 
 CACHES = {
     "default": {
         "BACKEND": "django.core.cache.backends.redis.RedisCache",
-        "LOCATION": f"{getenv('REDIS_PROTOCOL')}://{getenv('REDIS_USER')}:{getenv('REDIS_PASSWORD')}@{getenv('REDIS_HOST')}:{getenv('REDIS_PORT')}",
-    }
+        "LOCATION": REDIS_LOCATION,
+    },
+    "dummy": {
+        "BACKEND": "django.core.cache.backends.dummy.DummyCache",
+    },
 }
 
+
 CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
-CELERY_BROKER_URL = CACHES["default"]["LOCATION"]
+CELERY_BROKER_URL = REDIS_LOCATION
+
+# CELERY_CACHE_BACKEND = "django-cache"
+CELERY_RESULT_BACKEND = "django-db"
 
 CELERY_ACCEPT_CONTENT = ["application/json"]
 CELERY_RESULT_SERIALIZER = "json"
 CELERY_TASK_SERIALIZER = "json"
+
 CELERY_TASK_TRACK_STARTED = True
-CELERY_RESULT_BACKEND = "django-db"
-CELERY_RESULT_EXTENDED = DEBUG
+CELERY_TASK_ALWAYS_EAGER = False
+CELERY_TASK_EAGER_PROPAGATES = True
+CELERY_RESULT_EXTENDED = True
+
+CELERY_TASK_STORE_EAGER_RESULT = True
+
+if True:
+    DATABASES["default"] = DATABASES.pop("sqlite")
+    CACHES["default"] = CACHES.pop("dummy")
+
+    CELERY_BROKER_URL = "memory://"
+    CELERY_TASK_ALWAYS_EAGER = True
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators

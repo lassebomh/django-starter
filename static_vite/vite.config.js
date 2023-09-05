@@ -8,7 +8,7 @@ export default defineConfig(({ command, mode, ssrBuild }) => {
       UnoCSS(),
       FullReload(['../**/*.html', '../*/components/**/*.py', './src/**/*'], { delay: 0 })
     ],
-    root: '/app/' + process.env.STATIC_SRC_DIR + "/src",
+    root: 'src',
     base: '/static/',
     server: {
       host: true,

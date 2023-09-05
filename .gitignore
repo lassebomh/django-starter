@@ -13,3 +13,5 @@ venv/
 !.env.staging
 static/dist
 collectstatic
+
+**/node_modules
