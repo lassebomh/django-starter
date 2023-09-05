@@ -11,7 +11,7 @@ ENV PYTHONUNBUFFERED=1 \
     PYSETUP_PATH="/opt/pysetup" \
     VIRTUAL_ENV="/opt/pysetup/.venv" \
     STATIC_DIST_DIR="/app/static/dist" \
-    STATIC_SRC_DIR="vite" \
+    STATIC_SRC_DIR="static_vite" \
     NODE_MAJOR=20
 
 ENV PATH="$POETRY_HOME/bin:$VIRTUAL_ENV/bin:$PATH"

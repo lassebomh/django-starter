@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 import os
 from pathlib import Path
 
+from django.urls import reverse_lazy
+
 from core.monkeypatch import monkeypatch
 
 getenv = os.environ.get
@@ -61,14 +63,17 @@ INSTALLED_APPS = [
     "core",
     "core.templatetags",
     "search",
+    "public_site",
     # Third party
     "django_vite",
     "django_unicorn",
     "django_celery_results",
     "django_celery_beat",
+    "debug_toolbar",
 ]
 
 MIDDLEWARE = [
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -81,6 +86,11 @@ MIDDLEWARE = [
 
 if MODE == "staging":
     MIDDLEWARE += ["whitenoise.middleware.WhiteNoiseMiddleware"]
+
+
+LOGIN_REDIRECT_URL = reverse_lazy("account_profile")
+LOGIN_URL = reverse_lazy("login")
+LOGOUT_REDIRECT_URL = reverse_lazy("root")
 
 ROOT_URLCONF = "mysite.urls"
 
@@ -104,6 +114,7 @@ TEMPLATES = [
 ]
 
 FORM_RENDERER = "django.forms.renderers.TemplatesSetting"
+
 
 WSGI_APPLICATION = "mysite.wsgi.application"
 

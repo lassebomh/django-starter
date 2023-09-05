@@ -13,4 +13,4 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Run approval tests
-      run: ./scripts/test.sh
+      run: ./.ci/scripts/test.sh

@@ -14,11 +14,12 @@
 				"unocss.underline": false,
 				"unocss.autocomplete.maxItems": 100,
 				"unocss.colorPreview": false,
-				"unocss.root": "/app/vite",
+				"unocss.root": "/app/static_vite",
 				"black-formatter.importStrategy": "fromEnvironment",
 				"ruff.importStrategy": "fromEnvironment",
 				"python.terminal.activateEnvironment": false,
 				"python.defaultInterpreterPath": "/opt/pysetup/.venv/bin/python",
+				"explorer.autoReveal": false,
 				"[python]": {
 					"editor.defaultFormatter": "ms-python.black-formatter",
 					"diffEditor.ignoreTrimWhitespace": false,

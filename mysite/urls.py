@@ -6,14 +6,17 @@ from wagtail.admin import urls as wagtailadmin_urls
 from wagtail.documents import urls as wagtaildocs_urls
 
 from core import urls as core_urls
+from public_site import urls as public_site_urls
 from search import views as search_views
 
 urlpatterns = [
     # First-party
     path("search/", search_views.search, name="search"),
     path("", include(core_urls)),
+    path("", include(public_site_urls)),
     # Third-party
     path("unicorn/", include("django_unicorn.urls")),
+    path("__debug__/", include("debug_toolbar.urls")),
     # Builtin
     path("django-admin/", admin.site.urls),
     path("admin/", include(wagtailadmin_urls)),
