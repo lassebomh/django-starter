@@ -18,6 +18,7 @@ urlpatterns = [
     path("unicorn/", include("django_unicorn.urls")),
     path("__debug__/", include("debug_toolbar.urls")),
     path("__reload__/", include("django_browser_reload.urls")),
+    path("icons/", include("dj_iconify.urls")),
     # Builtin
     path("django-admin/", admin.site.urls),
     path("admin/", include(wagtailadmin_urls)),

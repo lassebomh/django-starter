@@ -33,7 +33,10 @@
         {% endif %}
         
         {% unicorn_scripts %}
+
+        <script type="text/javascript" src="{% url 'config.js' %}"></script>
         
+
         {% vite_hmr_client %}
         {% vite_asset 'main.js' %}
     </head>

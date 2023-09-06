@@ -7,7 +7,7 @@
             <div>+</div>
             {% input type="text" u_model="b" placeholder="Second number" label="" %}
 
-            <button u:click="new_task()" class="text-white bg-black hover:bg-black-800 focus:ring-4 focus:outline-none focus:ring-black-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">
+            <button u:click="new_task()" unicorn:loading.class="animate-spin" class="text-white bg-black hover:bg-black-800 focus:ring-4 focus:outline-none focus:ring-black-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">
                 Submit
             </button>
         </div>
@@ -40,13 +40,16 @@
                             {{ task.task_name }}
                         </td>
                         <td class="px-6 py-4">
-                            <div class="flex items-center">
+                            <div class="flex items-center gap-2">
                                 {% if task.status == 'SUCCESS' %}
-                                    <div class="h-2.5 w-2.5 mr-2 rounded-full bg-green-500"></div>
+                                    <span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
                                 {% elif task.status == 'STARTED' %}
-                                    <div class="h-2.5 w-2.5 mr-2 rounded-full bg-yellow-500 animate-ping"></div>
+                                    <span class="relative flex h-3 w-3">
+                                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-yellow-400 opacity-75"></span>
+                                        <span class="relative inline-flex rounded-full h-3 w-3 bg-yellow-500"></span>
+                                    </span>
                                 {% elif task.status == 'FAILED' %}
-                                    <div class="h-2.5 w-2.5 mr-2 rounded-full bg-red-500"></div>
+                                    <span class="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
                                 {% endif %}
                                 {{ task.status }}
                             </div>

@@ -17,18 +17,18 @@ from django.urls import reverse_lazy
 
 from core.monkeypatch import monkeypatch
 
-getenv = os.environ.get
+var = os.environ.get
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-MODE = getenv("MODE")
+MODE = var("MODE")
 
 monkeypatch(MODE)
 
 DEBUG = MODE != "production"
 
-SECRET_KEY = getenv("DJANGO_SECRET_KEY", "django-insecure-1234567890")
+SECRET_KEY = var("DJANGO_SECRET_KEY", "django-insecure-1234567890")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -69,6 +69,7 @@ INSTALLED_APPS = [
     "django_celery_results",
     "django_celery_beat",
     "django_browser_reload",
+    "dj_iconify.apps.DjIconifyConfig",
     "debug_toolbar",
 ]
 
@@ -126,34 +127,26 @@ WSGI_APPLICATION = "mysite.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": getenv("POSTGRES_DB"),
-        "USER": getenv("POSTGRES_USER"),
-        "PASSWORD": getenv("POSTGRES_PASSWORD"),
-        "HOST": getenv("POSTGRES_HOST"),
-        "POST": getenv("POSTGRES_PORT"),
+        "NAME": var("POSTGRES_DB"),
+        "USER": var("POSTGRES_USER"),
+        "PASSWORD": var("POSTGRES_PASSWORD"),
+        "HOST": var("POSTGRES_HOST"),
+        "POST": var("POSTGRES_PORT"),
         # 'OPTIONS': {'sslmode': 'require'},
     },
-    "sqlite": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": "dev.sqlite3",
-    },
 }
-
-REDIS_LOCATION = f"{getenv('REDIS_PROTOCOL')}://{getenv('REDIS_USER')}:{getenv('REDIS_PASSWORD')}@{getenv('REDIS_HOST')}:{getenv('REDIS_PORT')}"
 
 CACHES = {
     "default": {
         "BACKEND": "django.core.cache.backends.redis.RedisCache",
-        "LOCATION": REDIS_LOCATION,
-    },
-    "dummy": {
-        "BACKEND": "django.core.cache.backends.dummy.DummyCache",
+        "LOCATION": "{}://{}:{}@{}:{}".format(
+            *(map(var, ("REDIS_PROTOCOL", "REDIS_USER", "REDIS_PASSWORD", "REDIS_HOST", "REDIS_PORT")))
+        ),
     },
 }
 
-
 CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
-CELERY_BROKER_URL = REDIS_LOCATION
+CELERY_BROKER_URL = CACHES["default"]["LOCATION"]
 
 CELERY_CACHE_BACKEND = "django-cache"
 CELERY_RESULT_BACKEND = "django-db"
@@ -165,43 +158,36 @@ CELERY_TASK_SERIALIZER = "json"
 CELERY_TASK_TRACK_STARTED = True
 CELERY_TASK_ALWAYS_EAGER = False
 CELERY_TASK_EAGER_PROPAGATES = True
-CELERY_RESULT_EXTENDED = True  # Should probably remove
+CELERY_RESULT_EXTENDED = True  # Could be a security risk.
 
 CELERY_TASK_STORE_EAGER_RESULT = True
-
-# if True:
-#     DATABASES["default"] = DATABASES.pop("sqlite")
-#     CACHES["default"] = CACHES.pop("dummy")
-
-#     CELERY_BROKER_URL = "memory://"
-#     CELERY_TASK_ALWAYS_EAGER = True
 
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
-    },
+    {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
+    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
+    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
+    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
 ]
 
 LOGGING = {
-    # Definition of filters
-    "filters": {"hide_staticfiles": {"()": "mysite.logger.SkipStaticFilter"}},
+    "filters": {
+        "hide_staticfiles": {"()": "mysite.logger.FilterPathBlacklist"},
+    },
+    "formatters": {
+        "vscode_formatter": {"()": "mysite.logger.VSCodeFormatter"},
+    },
     "version": 1,
     "disable_existing_loggers": False,
     "handlers": {
-        "console": {"class": "logging.StreamHandler", "filters": ["hide_staticfiles"]},
+        "console": {
+            "class": "logging.StreamHandler",
+            "filters": ["hide_staticfiles"],
+            "formatter": "vscode_formatter",
+        },
     },
     "loggers": {
         "django": {
@@ -247,6 +233,8 @@ DJANGO_VITE_DEV_MODE = MODE == "development"
 
 # Name of static files folder (after called python manage.py collectstatic)
 STATIC_ROOT = BASE_DIR / "collectstatic"
+
+ICONIFY_JSON_ROOT = BASE_DIR / "static_vite" / "node_modules" / "@iconify", "json"
 
 # Include DJANGO_VITE_ASSETS_PATH into STATICFILES_DIRS to be copied inside
 # when run command python manage.py collectstatic

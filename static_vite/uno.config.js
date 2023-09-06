@@ -36,12 +36,13 @@ export default defineConfig({
         },
         [/^btn-(.+)$/, function ([, color]) {
             return `focus:outline-4 focus:outline-none font-medium mb-2 mr-2 px-5 py-2.5 rounded-lg text-sm text-white bg-${color}-700 focus:outline-${color}-300 hover:bg-${color}-800`
-        }]
+        }],
     ],
+    safelist: 'password'.split(' '),
     content: {
         filesystem: [
             "../**/templates/**/*.html"
-        ]
+        ],
     },
     variants: [
         (matcher) => {

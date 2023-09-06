@@ -2,33 +2,55 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Start development services",
+            "label": "Redis, Postgres",
             "type": "docker-compose",
-            "runOptions": {
-                "runOn": "folderOpen",
-            },
             "presentation": {
-                "reveal": "silent"
+                "reveal": "silent",
+                "group": "background",
+                "echo": false,
             },
+            "icon": {
+                "id": "database",
+                "color": "terminal.ansiGreen"
+            },
+            "hide": true,
             "dockerCompose": {
                 "up": {
-                    "detached": true,
+                    "detached": false,
                     "build": true
                 },
                 "files": [
                     "${workspaceFolder}/.ci/dev/docker-compose.yml"
                 ],
+            },
+        },
+        {
+            "label": "Vite",
+            "type": "npm",
+            "script": "dev",
+            "hide": true,
+            "path": "static_vite",
+            "icon": {
+                "id": "sparkle",
+                "color": "terminal.ansiGreen"
+            },
+            "presentation": {
+                "reveal": "silent",
+                "group": "background",
+                "echo": false,
             }
         },
         {
-            "label": "Stop development services",
-            "type": "docker-compose",
-            "dockerCompose": {
-                "down": {},
-                "files": [
-                    "${workspaceFolder}/.ci/dev/docker-compose.yml"
-                ],
-            }
+            "label": "Run dev services",
+            "dependsOn": [
+                "Vite",
+                "Redis, Postgres",
+            ],
+            "dependsOrder": "parallel",
+            "runOptions": {
+                "runOn": "folderOpen",
+            },
+            "problemMatcher": []
         }
-    ]
+    ],
 }
