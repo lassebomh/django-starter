@@ -17,18 +17,18 @@ from django.urls import reverse_lazy
 
 from core.monkeypatch import monkeypatch
 
-var = os.environ.get
+env = os.environ.get
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-MODE = var("MODE")
+MODE = env("MODE")
 
 monkeypatch(MODE)
 
 DEBUG = MODE != "production"
 
-SECRET_KEY = var("DJANGO_SECRET_KEY", "django-insecure-1234567890")
+SECRET_KEY = env("DJANGO_SECRET_KEY", "django-insecure-1234567890")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -127,11 +127,11 @@ WSGI_APPLICATION = "mysite.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": var("POSTGRES_DB"),
-        "USER": var("POSTGRES_USER"),
-        "PASSWORD": var("POSTGRES_PASSWORD"),
-        "HOST": var("POSTGRES_HOST"),
-        "POST": var("POSTGRES_PORT"),
+        "NAME": env("POSTGRES_DB"),
+        "USER": env("POSTGRES_USER"),
+        "PASSWORD": env("POSTGRES_PASSWORD"),
+        "HOST": env("POSTGRES_HOST"),
+        "POST": env("POSTGRES_PORT"),
         # 'OPTIONS': {'sslmode': 'require'},
     },
 }
@@ -140,7 +140,7 @@ CACHES = {
     "default": {
         "BACKEND": "django.core.cache.backends.redis.RedisCache",
         "LOCATION": "{}://{}:{}@{}:{}".format(
-            *(map(var, ("REDIS_PROTOCOL", "REDIS_USER", "REDIS_PASSWORD", "REDIS_HOST", "REDIS_PORT")))
+            *(map(env, ("REDIS_PROTOCOL", "REDIS_USER", "REDIS_PASSWORD", "REDIS_HOST", "REDIS_PORT")))
         ),
     },
 }
