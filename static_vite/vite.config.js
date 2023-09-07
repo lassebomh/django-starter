@@ -1,15 +1,14 @@
 import UnoCSS from 'unocss/vite';
-import Unfonts from 'unplugin-fonts/vite';
 import { defineConfig } from 'vite';
+import webfontDownload from 'vite-plugin-webfont-dl';
 
-export default defineConfig(({ command, mode, ssrBuild }) => {
-  return {
+export default defineConfig({
     plugins: [
       UnoCSS(),
-      Unfonts({
-        google: {
-          families: ['IBM Plex Sans'], //, 'Open Sans', 'Material+Icons'],
-        },
+      webfontDownload([
+        'https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&display=swap',
+      ], {
+        injectAsStyleTag: false,
       }),
     ],
     root: 'src',
@@ -35,4 +34,4 @@ export default defineConfig(({ command, mode, ssrBuild }) => {
       },
     },
   }
-})
+)

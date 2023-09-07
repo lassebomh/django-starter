@@ -30,11 +30,11 @@
         
         {% unicorn_scripts %}
 
-        <script type="text/javascript" src="{% url 'config.js' %}"></script>
-        
 
         {% vite_hmr_client %}
         {% vite_asset 'main.js' %}
+        
+        <link rel="stylesheet" href="{% vite_asset_url 'webfonts.css' %}">
     </head>
 
     <body class="h-screen bg-gray-50 {% block body_class %}{% endblock %}">
