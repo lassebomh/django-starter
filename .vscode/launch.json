@@ -16,7 +16,13 @@
             "envFile": "${workspaceFolder}/.env.dev",
             "request": "launch",
             "module": "celery",
-            "args": ["-A", "mysite.celery", "worker", "-l", "info"],
+            "args": [
+                "-A",
+                "mysite.celery",
+                "worker",
+                "-l",
+                "info"
+            ],
             "console": "internalConsole",
             "justMyCode": true,
             "presentation": {
@@ -51,7 +57,11 @@
             "envFile": "${workspaceFolder}/.env.dev",
             "request": "launch",
             "module": "gunicorn",
-            "args": ["--bind", "0.0.0.0:8000", "mysite.wsgi"],
+            "args": [
+                "--bind",
+                "0.0.0.0:8000",
+                "mysite.wsgi"
+            ],
             "internalConsoleOptions": "openOnFirstSessionStart",
             "django": true,
             "justMyCode": true,
@@ -77,5 +87,5 @@
             },
             "stopAll": true,
         }
-    ]
+    ],
 }
