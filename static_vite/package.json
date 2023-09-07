@@ -10,6 +10,7 @@
     "@unocss/transformer-variant-group": "^0.55.7",
     "alpinejs": "^3.13.0",
     "unocss": "^0.55.1",
+    "unplugin-fonts": "^1.0.3",
     "vite": "^4.4.9"
   }
 }

@@ -1,10 +1,16 @@
 import UnoCSS from 'unocss/vite';
+import Unfonts from 'unplugin-fonts/vite';
 import { defineConfig } from 'vite';
 
 export default defineConfig(({ command, mode, ssrBuild }) => {
   return {
     plugins: [
       UnoCSS(),
+      Unfonts({
+        google: {
+          families: ['IBM Plex Sans'], //, 'Open Sans', 'Material+Icons'],
+        },
+      }),
     ],
     root: 'src',
     base: '/static/',

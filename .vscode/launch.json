@@ -35,7 +35,7 @@
             "args": [
                 "runserver",
             ],
-            "internalConsoleOptions": "openOnFirstSessionStart",
+            "internalConsoleOptions": "openOnSessionStart",
             "django": true,
             "justMyCode": true,
             "console": "internalConsole",

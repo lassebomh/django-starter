@@ -1,4 +1,5 @@
 import '@unocss/reset/tailwind-compat.css';
+import 'unfonts.css';
 import 'virtual:uno.css';
 import './theme.css';
 
