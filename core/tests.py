@@ -1,14 +1,9 @@
-from django.test import TestCase
+from django.test import SimpleTestCase
 
-from .tasks import add
+# from .tasks import add
 
-# Create your tests here.
-class YourTestClass(TestCase):
-    def test_example(self) -> None:
-        self.assertEqual(1 + 1, 2)
 
-    # def test_celery_add(self) -> None:
-    #     print("Getting result...")
-    #     result = add.delay(3, 2).get()
-    #     print("Got result!", result)
-    #     self.assertEqual(result, 5)
+class MyTaskTestCase(SimpleTestCase):
+    def test_my_task(self) -> None:
+        # result = add.delay(1, 2).get(timeout=5)
+        self.assertEqual(1 + 2, 3)

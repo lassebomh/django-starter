@@ -18,7 +18,7 @@ export default defineConfig(({ command, mode, ssrBuild }) => {
       },
     },
     build: {
-      outDir: '../static/dist',
+      outDir: '../../static/dist',
       assetsDir: '',
       manifest: true,
       emptyOutDir: true,

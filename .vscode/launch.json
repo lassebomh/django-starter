@@ -45,6 +45,23 @@
                 "order": 2
             },
         },
+        {
+            "name": "Django - Gunicorn",
+            "type": "python",
+            "envFile": "${workspaceFolder}/.env.dev",
+            "request": "launch",
+            "module": "gunicorn",
+            "args": ["--bind", "0.0.0.0:8000", "mysite.wsgi"],
+            "internalConsoleOptions": "openOnFirstSessionStart",
+            "django": true,
+            "justMyCode": true,
+            "console": "internalConsole",
+            "presentation": {
+                "hidden": false,
+                "group": "Individual",
+                "order": 2
+            },
+        },
     ],
     "compounds": [
         {

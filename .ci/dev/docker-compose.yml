@@ -10,9 +10,9 @@ services:
   #     dockerfile: ./.ci/Dockerfile
   #     target: dev
   #   command: sleep infinity
-  #   volumes:
-  #     - ../..:/app
-  #     - /app/static_vite/node_modules/
+  #   # volumes:
+  #   #   - ../..:/app
+  #   #   - /app/static_vite/node_modules/
 
   postgres:
     env_file: ../../.env.dev

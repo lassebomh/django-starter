@@ -12,6 +12,7 @@ ENV PYTHONUNBUFFERED=1 \
     VIRTUAL_ENV="/opt/pysetup/.venv" \
     STATIC_DIST_DIR="/app/static/dist" \
     STATIC_SRC_DIR="static_vite" \
+    COLLECTSTATIC_DIR="/app/collectstatic" \
     NODE_MAJOR=20
 
 ENV PATH="$POETRY_HOME/bin:$VIRTUAL_ENV/bin:$PATH"
@@ -63,7 +64,9 @@ COPY . .
 WORKDIR /app/$STATIC_SRC_DIR
 RUN npm run build
 
-WORKDIR /
+WORKDIR /app
+
+RUN python manage.py collectstatic --no-input
 
 
 
@@ -71,7 +74,8 @@ FROM base as prod-runtime
 
 COPY --from=prod-builder $POETRY_HOME $POETRY_HOME
 COPY --from=prod-builder $PYSETUP_PATH $PYSETUP_PATH
-COPY --from=prod-builder $STATIC_DIST_DIR $STATIC_DIST_DIR
+COPY --from=prod-builder $COLLECTSTATIC_DIR $COLLECTSTATIC_DIR
+# COPY --from=prod-builder $STATIC_DIST_DIR $STATIC_DIST_DIR
 
 WORKDIR /app
 
@@ -85,7 +89,6 @@ FROM prod-runtime as prod
 
 EXPOSE 8000
 
-RUN python manage.py collectstatic --no-input
 
 CMD ["./entrypoint.prod.sh"]
 

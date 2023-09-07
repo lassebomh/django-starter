@@ -13,7 +13,6 @@
                 "id": "database",
                 "color": "terminal.ansiGreen"
             },
-            "hide": true,
             "dockerCompose": {
                 "up": {
                     "detached": false,
@@ -28,7 +27,6 @@
             "label": "Vite",
             "type": "npm",
             "script": "dev",
-            "hide": true,
             "path": "static_vite",
             "icon": {
                 "id": "sparkle",

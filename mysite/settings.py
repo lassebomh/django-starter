@@ -22,11 +22,11 @@ env = os.environ.get
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-MODE = env("MODE")
+MODE = env("MODE", "production")
 
 monkeypatch(MODE)
 
-DEBUG = MODE != "production"
+DEBUG = MODE == "development"
 
 SECRET_KEY = env("DJANGO_SECRET_KEY", "django-insecure-1234567890")
 
@@ -248,7 +248,6 @@ MEDIA_URL = "/media/"
 
 
 # Wagtail settings
-
 WAGTAIL_SITE_NAME = "mysite"
 
 # Search

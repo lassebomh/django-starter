@@ -20,6 +20,9 @@ django-celery-beat = "^2.5.0"
 celery = {git = "https://github.com/KOliver94/celery.git", rev = "eager_task_no_name_bug"}
 django-iconify = "^0.3"
 
+django-browser-reload = "^1.11.0"
+django-debug-toolbar = "^4.2.0"
+
 [tool.poetry.group.dev.dependencies]
 mypy = "^1.5.1"
 black = "^23.7.0"
@@ -27,8 +30,6 @@ ruff = "^0.0.286"
 celery-types = "^0.19.0"
 django-stubs = "^4.2.3"
 django-stubs-ext = "^4.2.2"
-django-debug-toolbar = "^4.2.0"
-django-browser-reload = "^1.11.0"
 
 [tool.mypy]
 cache_dir = "/opt/mypy_cache"
